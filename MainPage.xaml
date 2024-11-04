@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.MainPage">
     <StackLayout BackgroundColor="#F6F6F6">
-        <Grid RowDefinitions="125, Auto, *"
+        <Grid RowDefinitions="125, Auto, Auto, Auto"
               ColumnDefinitions="*"
               Padding="40, 30, 40, 10"
               ColumnSpacing="10">
@@ -46,9 +46,7 @@
                 <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Enter name..."
                            HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                          
-                        />
+                           VerticalOptions="CenterAndExpand"/>
                 </Frame>
 
                 <Label FontSize="14"
@@ -62,8 +60,7 @@
                 <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Enter email..."
                            HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           />
+                           VerticalOptions="CenterAndExpand"/>
                 </Frame>
 
                 <Label FontSize="14"
@@ -77,10 +74,15 @@
                 <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Enter password..."
                            HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           />
+                           VerticalOptions="CenterAndExpand"/>
                 </Frame>
             </StackLayout>
+
+            <Button Grid.Row="3" 
+                    Text="Sign In"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand" 
+                    Margin="0, 20, 0, 0"/>
         </Grid>
     </StackLayout>
 </ContentPage>
