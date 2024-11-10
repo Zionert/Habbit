@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Habbit.SignUpPage">
+
+    <StackLayout BackgroundColor="#F6F6F6">
+        <Grid RowDefinitions="125, Auto, Auto, Auto"
+          ColumnDefinitions="*"
+          Padding="40, 30, 40, 10"
+          ColumnSpacing="10">
+
+            <Image Grid.ColumnSpan="2"
+               Background="Transparent"
+               Source="logo.png"
+               HorizontalOptions="Center" />
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                <Label FontSize="44"
+                       FontFamily="Nunito-Bold"
+                       TextColor="#2F2F2F"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center">
+                    Sign Up
+                </Label>
+
+                <BoxView WidthRequest="90" BackgroundColor="Transparent"/>
+
+                <Button Text="Log In >"
+                    FontSize="14"
+                    FontFamily="Nunito-Bold"
+                    TextColor="#1269CC"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0, 0, 0, 10"
+                    Clicked="OnLogInButtonClicked"/>
+            </StackLayout>
+
+            <StackLayout BackgroundColor="Transparent" Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0, 30, 0, 0">
+                <Label FontSize="14"
+                   FontFamily="Nunito-Bold"
+                   TextColor="#666666"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   Margin="5, 0, 0, 10">
+                    Name
+                </Label>
+                <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
+                    <Entry Placeholder="Enter name..."
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="CenterAndExpand"/>
+                </Frame>
+
+                <Label FontSize="14"
+                   FontFamily="Nunito-Bold"
+                   TextColor="#666666"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   Margin="5, 10, 0, 10">
+                    Email
+                </Label>
+                <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
+                    <Entry Placeholder="Enter email..."
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="CenterAndExpand"/>
+                </Frame>
+
+                <Label FontSize="14"
+                   FontFamily="Nunito-Bold"
+                   TextColor="#666666"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   Margin="5, 10, 0, 10">
+                    Password
+                </Label>
+                <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
+                    <Entry Placeholder="Enter password..."
+                           IsPassword="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+                </Frame>
+
+
+            </StackLayout>
+
+            <StackLayout Grid.Row="3">
+                <Button 
+                   Text="Log In"
+                   VerticalOptions="Center"
+                   HorizontalOptions="FillAndExpand" 
+                   Margin="0, 20, 0, 0"/>
+
+                <Label FontSize="14"
+                   FontFamily="Nunito-Bold"
+                   TextColor="#666666"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0, 20, 0, 0">
+                    or log in with:
+                </Label>
+
+                <Button
+                   ImageSource="logo_google2"
+                   BackgroundColor="Black"
+                   VerticalOptions="Center"
+                   HorizontalOptions="FillAndExpand" 
+                   Margin="0, 20, 0, 0"
+                   WidthRequest="313"
+                   HeightRequest="44"/>
+
+
+            </StackLayout>
+
+        </Grid>
+    </StackLayout>
+</ContentPage>
