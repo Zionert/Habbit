@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.MainPage">
+
     <StackLayout BackgroundColor="#F6F6F6">
         <Grid RowDefinitions="125, Auto, Auto, Auto"
               ColumnDefinitions="*"
@@ -24,14 +25,15 @@
 
                 <BoxView WidthRequest="90" BackgroundColor="Transparent"/>
 
-                <Label FontSize="14"
-                       FontFamily="Nunito-Bold"
-                       TextColor="#1269CC"
-                       HorizontalOptions="End"
-                       VerticalOptions="End"
-                       Margin="0, 0, 0, 10">
-                    Sign Up >
-                </Label>
+                <Button Text="Sign Up >"
+                        FontSize="14"
+                        FontFamily="Nunito-Bold"
+                        TextColor="#1269CC"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Margin="0, 0, 0, 10"
+                        Clicked="OnSignUpButtonClicked"/>
             </StackLayout>
 
             <StackLayout BackgroundColor="Transparent" Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0, 30, 0, 0">
@@ -60,6 +62,7 @@
                 </Label>
                 <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Enter password..."
+                           IsPassword="True"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="CenterAndExpand"/>
                 </Frame>
