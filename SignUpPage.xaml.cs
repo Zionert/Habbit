@@ -1,3 +1,4 @@
+using Auth0.OidcClient;
 using Microsoft.Maui.Controls.Compatibility;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Habbit;
@@ -9,9 +10,10 @@ public partial class SignUpPage : ContentPage
 
 
     }
-
+    /*
     private async void OnLogInButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new MainPage()); //Switch the page
     }
+    */
 }

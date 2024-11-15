@@ -33,7 +33,7 @@
                     HorizontalOptions="End"
                     VerticalOptions="End"
                     Margin="0, 0, 0, 10"
-                    Clicked="OnLogInButtonClicked"/>
+                    />
             </StackLayout>
 
             <StackLayout BackgroundColor="Transparent" Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0, 30, 0, 0">
@@ -100,7 +100,7 @@
                 </Label>
 
                 <Button
-                   ImageSource="logo_google2"
+                   ImageSource="google.svg"
                    BackgroundColor="Black"
                    VerticalOptions="Center"
                    HorizontalOptions="FillAndExpand" 
