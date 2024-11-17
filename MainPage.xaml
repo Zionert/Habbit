@@ -3,108 +3,133 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.MainPage">
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
+        <Grid Padding="10,0" >
+            <Grid.RowDefinitions>
+               
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <!-- Login View -->
-            <StackLayout x:Name="LoginView">
+            <StackLayout x:Name="LoginView" Grid.Row="0">
                 <StackLayout BackgroundColor="#F6F6F6">
                     <Grid RowDefinitions="125, Auto, Auto, Auto"
                           ColumnDefinitions="*"
                           Padding="40, 30, 40, 10"
                           ColumnSpacing="10">
 
-                        <Image Grid.ColumnSpan="2"
+                        <Image Grid.ColumnSpan="1"
                                Background="Transparent"
                                Source="logo.png"
-                               HorizontalOptions="Center" />
+                               HorizontalOptions="Center"
+                               Margin="0, 100, 0, 0"
+                               HeightRequest="200"/>
 
-                        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                            <Label FontSize="44"
-                                   FontFamily="Nunito-Bold"
-                                   TextColor="#2F2F2F"
-                                   HorizontalOptions="Start"
-                                   VerticalOptions="Center">
-                                Log In
-                            </Label>
-                            <BoxView WidthRequest="90" BackgroundColor="Transparent" />
-                            <Button Text="Sign Up >"
-                                    FontSize="14"
-                                    FontFamily="Nunito-Bold"
-                                    TextColor="#1269CC"
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="End"
-                                    Margin="0, 0, 0, 10"
-                                    Clicked="OnSignUpButtonClicked" />
-                        </StackLayout>
 
-                        <StackLayout BackgroundColor="Transparent" Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Margin="0, 30, 0, 0">
-                            <Label FontSize="14"
-                                   FontFamily="Nunito-Bold"
-                                   TextColor="#666666"
-                                   HorizontalOptions="Start"
-                                   VerticalOptions="Center"
-                                   Margin="5, 0, 0, 10">
-                                Email
-                            </Label>
-                            <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
-                                <Entry Placeholder="Enter email..."
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="CenterAndExpand" />
-                            </Frame>
 
-                            <Label FontSize="14"
-                                   FontFamily="Nunito-Bold"
-                                   TextColor="#666666"
-                                   HorizontalOptions="Start"
-                                   VerticalOptions="Center"
-                                   Margin="5, 10, 0, 10">
-                                Password
-                            </Label>
-                            <Frame BackgroundColor="White" BorderColor="Gray" CornerRadius="5" Padding="0">
-                                <Entry Placeholder="Enter password..."
-                                       IsPassword="True"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="CenterAndExpand" />
-                            </Frame>
-                        </StackLayout>
+                        <StackLayout Grid.Row="2">
 
-                        <StackLayout Grid.Row="3">
-                            <Button x:Name="LoginBtn"
-                                    Text="Log In"
-                                    SemanticProperties.Hint="Click to log in"
-                                    
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="FillAndExpand"
-                                    Margin="0, 20, 0, 0" />
-                            <Label FontSize="14"
-                                   FontFamily="Nunito-Bold"
-                                   TextColor="#666666"
+                            <Frame BackgroundColor="#4E8AC7" 
+                                   CornerRadius="30"
+                                   Padding="0"
+                                   WidthRequest="313"
+                                   HeightRequest="60"
+                                   Margin="0, 500, 0, 0"
                                    HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Margin="0, 20, 0, 0">
-                                or log in with:
-                            </Label>
-                            <Button Text="Log with Auth0"
-                                    Clicked="OnLoginClicked"
-                                    BackgroundColor="Black"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="FillAndExpand"
-                                    Margin="0, 20, 0, 0"
-                                    WidthRequest="313"
-                                    HeightRequest="44" />
+                                   VerticalOptions="Center">
+                                <Grid>
+                                    <HorizontalStackLayout Margin="40, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="Start">
+                                        <!-- Іконка -->
+                                        <Image>
+                                            <Image.Source>
+                                                <FontImageSource Glyph="&#xf007;"
+                                                                 FontFamily="FontAwesomeSolid"
+                                                                 Size="24"
+                                                                 Color="White" />
+                                            </Image.Source>
+                                        </Image>
+
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                    <!-- Текст -->
+                                        <Label Text="Welcome!"
+                                               FontSize="28"
+                                               TextColor="White" />
+                                    </HorizontalStackLayout>
+
+                                    <!-- Клікабельність -->
+                                    <Button BackgroundColor="Transparent"
+                                            Clicked="OnLoginClicked" />
+                                </Grid>
+                            </Frame>
+
+
                         </StackLayout>
                     </Grid>
                 </StackLayout>
             </StackLayout>
 
             <!-- Home View -->
-            <StackLayout x:Name="HomeView" IsVisible="false">
-                <Image Source="dotnet_bot.png"
-                       HeightRequest="185"
-                       Aspect="AspectFit"
-                       SemanticProperties.Description="dot net bot in a race car number eight" />
-                <!-- Add your additional UI for the home view here -->
+
+            <StackLayout x:Name="HomeView"  Grid.Row="0" Margin="0, 100, 0, 0" IsVisible="False" VerticalOptions="FillAndExpand">
+                    
+                    <Image x:Name="UserAvatar"
+                         WidthRequest="100"
+                        HeightRequest="100"
+                         Aspect="AspectFill"
+                        HorizontalOptions="Center" />
+                    <Label x:Name="UserName"
+                        FontSize="24"
+                        Margin="0, 20, 0, 0"
+                        TextColor="Black"
+                        HorizontalOptions="Center" />
+
+                    <Label Text="Welcome to our app!"
+                            FontSize="18"
+                            TextColor="Gray"
+                            HorizontalOptions="Center" />
+
+                <HorizontalStackLayout  Grid.Row="1" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Spacing="9">
+
+                    <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="&#xf015;" FontFamily="FontAwesomeSolid" Size="35" Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="&#xf200;" FontFamily="FontAwesomeSolid" Size="35" Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="&#xf067;" FontFamily="FontAwesomeSolid" Size="35" Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="&#xf0c0;" FontFamily="FontAwesomeSolid" Size="35" Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="&#xf013;" FontFamily="FontAwesomeSolid" Size="35" Color="Black" />
+                        </Button.ImageSource>
+                    </Button>
+
+
+
+                </HorizontalStackLayout>
+              
+
+
+
             </StackLayout>
-        </VerticalStackLayout>
+
+        </Grid>
     </ScrollView>
 </ContentPage>
