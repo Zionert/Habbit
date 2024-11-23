@@ -3,10 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.StaticsPage"
              Title="StaticsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <Grid Padding="5, 0">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <HorizontalStackLayout  Grid.Row="1" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Spacing="4">
+
+                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Clicked="OnHabbitsButtonClicked" >
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf272;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
+                    </Button.ImageSource>
+                </Button>
+
+                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Clicked="OnGoalsButtonClicked">
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf046;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
+                    </Button.ImageSource>
+                </Button>
+
+                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Clicked="OnAddButtonClicked">
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf067;" FontFamily="FontAwesomeSolid" Size="62" Color="Black" />
+                    </Button.ImageSource>
+                </Button>
+
+                <Button BackgroundColor="LightGrey" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf200;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
+                    </Button.ImageSource>
+                </Button>
+
+                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Clicked="OnSettingsButtonClicked">
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="&#xf013;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
+                    </Button.ImageSource>
+                </Button>
+
+
+
+            </HorizontalStackLayout>
+
+
+
+        </Grid>
+    </ScrollView>
 </ContentPage>

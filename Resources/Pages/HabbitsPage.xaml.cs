@@ -1,15 +1,15 @@
 namespace Habbit.Resources.Pages;
 
-public partial class SettingsPage : ContentPage
+public partial class HabbitsPage : ContentPage
 {
-	public SettingsPage()
+	public HabbitsPage()
 	{
 		InitializeComponent();
 	}
 
-    private async void OnHabbitsButtonClicked(object sender, EventArgs e)
+    private async void OnGoalsButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new HabbitsPage());
+        await Navigation.PushAsync(new GoalsPage());
     }
 
     private async void OnStaticsButtonClicked(object sender, EventArgs e)
@@ -22,8 +22,8 @@ public partial class SettingsPage : ContentPage
         await Navigation.PushAsync(new AddPage());
     }
 
-    private async void OnGoalsButtonClicked(object sender, EventArgs e)
+    private async void OnSettingsButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new GoalsPage());
+        await Navigation.PushAsync(new SettingsPage());
     }
 }
