@@ -81,10 +81,10 @@
 	  <MauiXaml Update="Resources\Pages\AddPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Pages\FriendsPage.xaml">
+	  <MauiXaml Update="Resources\Pages\GoalsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Pages\HomePage.xaml">
+	  <MauiXaml Update="Resources\Pages\HabbitsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Pages\SettingsPage.xaml">

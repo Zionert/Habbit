@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Habbit.Resources.Pages.SettingsPage"
-             Title="SettingsPage">
+             x:Class="Habbit.Resources.Pages.GoalsPage"
+             Title="GoalsPage">
     <ScrollView>
         <Grid Padding="5, 0">
             <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
                     </Button.ImageSource>
                 </Button>
 
-                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Clicked="OnGoalsButtonClicked">
+                <Button BackgroundColor="LightGrey" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
                     <Button.ImageSource>
                         <FontImageSource Glyph="&#xf046;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
                     </Button.ImageSource>
@@ -37,7 +37,7 @@
                     </Button.ImageSource>
                 </Button>
 
-                <Button BackgroundColor="LightGrey" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                <Button BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Clicked="OnSettingsButtonClicked">
                     <Button.ImageSource>
                         <FontImageSource Glyph="&#xf013;" FontFamily="FontAwesomeSolid" Size="45" Color="Black" />
                     </Button.ImageSource>

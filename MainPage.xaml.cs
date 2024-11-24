@@ -1,5 +1,6 @@
 ﻿using Auth0.ManagementApi.Models;
 using Auth0.OidcClient;
+using Habbit.Resources.Pages;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
@@ -41,20 +42,18 @@ namespace Habbit
                         var userInfoJson = await response.Content.ReadAsStringAsync();
                         var userInfo = JsonSerializer.Deserialize<Dictionary<string, object>>(userInfoJson);
 
-                        // Оновлюємо UI
-                        LoginView.IsVisible = false;
-                        HomeView.IsVisible = true;
+                        await Navigation.PushAsync(new StaticsPage());
 
                         // Показуємо аватарку та ім'я користувача
-                        if (userInfo.TryGetValue("picture", out var pictureUrl))
-                        {
-                            UserAvatar.Source = pictureUrl.ToString();
-                        }
+                        //if (userInfo.TryGetValue("picture", out var pictureUrl))
+                        //{
+                        //    UserAvatar.Source = pictureUrl.ToString();
+                        //}
 
-                        if (userInfo.TryGetValue("name", out var userName))
-                        {
-                            UserName.Text = userName.ToString();
-                        }
+                       // if (userInfo.TryGetValue("name", out var userName))
+                        //{
+                        //    UserName.Text = userName.ToString();
+                       // }
                     }
                     else
                     {
