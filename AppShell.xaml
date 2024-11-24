@@ -3,13 +3,82 @@
     x:Class="Habbit.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Habbit"
+    xmlns:core="clr-namespace:Habbit"
+    xmlns:pages="clr-namespace:Habbit.Resources.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="Habbit"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarForegroundColor="#4E8AC7"
+    Shell.TabBarTitleColor="#4E8AC7">
+    
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    ContentTemplate="{DataTemplate core:MainPage}"
+    Route="MainPage" />
+
+    <TabBar>
+        <Tab Title="Habbits">
+            <Tab.Icon>
+                <FontImageSource
+                     FontFamily="FontAwesomeSolid"
+                     Glyph="&#xf272;" />
+                <!-- Unicode для іконки FontAwesome -->
+            </Tab.Icon>
+            <ShellContent
+                     ContentTemplate="{DataTemplate pages:HabbitsPage}"
+                     Route="HabbitsPage" />
+        </Tab>
+
+        <Tab Title="Goals">
+            <Tab.Icon>
+                <FontImageSource
+                     FontFamily="FontAwesomeSolid"
+                     Glyph="&#xf14a;" />
+                <!-- Unicode для іконки FontAwesome -->
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:GoalsPage}" 
+                Route="GoalsPage" />
+        </Tab>
+
+        <Tab Title="Add">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="FontAwesomeSolid"
+                    Glyph="&#xf067;" />
+                <!-- Unicode для іконки FontAwesome -->
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:AddPage}" 
+                Route="AddPage" />
+        </Tab>
+
+        <Tab Title="Statics">
+            <Tab.Icon>
+                <FontImageSource
+                     FontFamily="FontAwesomeSolid"
+                     Glyph="&#xf200;" />
+                <!-- Unicode для іконки FontAwesome -->
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:StaticsPage}" 
+                Route="StaticsPage" />
+        </Tab>
+
+        <Tab Title="Settings">
+            <Tab.Icon>
+                <FontImageSource
+                     FontFamily="FontAwesomeSolid"
+                     Glyph="&#xf013;" />
+                <!-- Unicode для іконки FontAwesome -->
+            </Tab.Icon>
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:SettingsPage}" 
+                Route="SettingsPage" />
+        </Tab>
+    </TabBar>
+
+
+
 
 </Shell>

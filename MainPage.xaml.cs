@@ -42,7 +42,7 @@ namespace Habbit
                         var userInfoJson = await response.Content.ReadAsStringAsync();
                         var userInfo = JsonSerializer.Deserialize<Dictionary<string, object>>(userInfoJson);
 
-                        await Navigation.PushAsync(new StaticsPage());
+                        await Shell.Current.GoToAsync("//StaticsPage");
 
                         // Показуємо аватарку та ім'я користувача
                         //if (userInfo.TryGetValue("picture", out var pictureUrl))
@@ -50,10 +50,10 @@ namespace Habbit
                         //    UserAvatar.Source = pictureUrl.ToString();
                         //}
 
-                       // if (userInfo.TryGetValue("name", out var userName))
+                        // if (userInfo.TryGetValue("name", out var userName))
                         //{
                         //    UserName.Text = userName.ToString();
-                       // }
+                        // }
                     }
                     else
                     {
