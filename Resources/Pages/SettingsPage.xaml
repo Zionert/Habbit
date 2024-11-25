@@ -3,6 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.SettingsPage"
              Title="SettingsPage"
-             Background="Yellow">
+             Background="#E7E7E7">
+
+    <Grid VerticalOptions="Center" HorizontalOptions="Center">
+        
+
+            <Button Text="Log Out"
+                    BackgroundColor="#F03716"
+                    TextColor="White"
+                    CornerRadius="25"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    FontSize="Large"
+                    Padding="10"
+                    Clicked="LogOut"
+                    />
     
+    </Grid>
+
 </ContentPage>

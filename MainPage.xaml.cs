@@ -22,52 +22,31 @@ namespace Habbit
         {
             try
             {
-                // Виконуємо логін через Auth0
+                // Show loading page
+                await Shell.Current.GoToAsync("//LoadingPage");
+
                 var loginResult = await auth0Client.LoginAsync();
                 if (!loginResult.IsError)
                 {
-                    // Отримуємо токен доступу
-                    var accessToken = loginResult.AccessToken;
+                    Preferences.Set("IsLoggedIn", true);
 
-                    // Виконуємо запит до Auth0 UserInfo API
-                    var userInfoEndpoint = "https://dev-b5nb4y3005k58q3j.us.auth0.com/userinfo"; // Замість <your-auth0-domain> вставте свій домен
-                    var httpClient = new HttpClient();
-                    httpClient.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", accessToken);
-
-                    var response = await httpClient.GetAsync(userInfoEndpoint);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var userInfoJson = await response.Content.ReadAsStringAsync();
-                        var userInfo = JsonSerializer.Deserialize<Dictionary<string, object>>(userInfoJson);
-
-                        await Shell.Current.GoToAsync("//StaticsPage");
-
-                        // Показуємо аватарку та ім'я користувача
-                        //if (userInfo.TryGetValue("picture", out var pictureUrl))
-                        //{
-                        //    UserAvatar.Source = pictureUrl.ToString();
-                        //}
-
-                        // if (userInfo.TryGetValue("name", out var userName))
-                        //{
-                        //    UserName.Text = userName.ToString();
-                        // }
-                    }
-                    else
-                    {
-                        await DisplayAlert("Error", "Failed to fetch user info", "OK");
-                    }
+                    // Navigate to the main application page after login
+                    await Shell.Current.GoToAsync("//StaticsPage");
                 }
                 else
                 {
                     await DisplayAlert("Error", loginResult.ErrorDescription, "OK");
+
+                    // Navigate back to MainPage if login fails
+                    await Shell.Current.GoToAsync("//MainPage");
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"An unexpected error occurred: {ex.Message}", "OK");
+
+                // Navigate back to MainPage if an error occurs
+                await Shell.Current.GoToAsync("//MainPage");
             }
         }
 

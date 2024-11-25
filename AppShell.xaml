@@ -15,6 +15,7 @@
     <ShellContent
     ContentTemplate="{DataTemplate core:MainPage}"
     Route="MainPage" />
+    <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate pages:LoadingPage}" />
 
     <TabBar>
         <Tab Title="Habbits">
