@@ -3,6 +3,132 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.StaticsPage"
              Title="StaticsPage"
-             Background="Green">
-    
+             Background="#E7E7E7">
+    <ScrollView>
+
+        <!-- Структура для аватарки та імені -->
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <!-- Контейнер для аватарки та імені користувача -->
+            <HorizontalStackLayout Spacing="20" VerticalOptions="Start">
+                <!-- Аватарка -->
+                <Frame HeightRequest="60" WidthRequest="60" CornerRadius="60"
+                       BorderColor="Gray" Padding="0"
+                       VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image Source="{Binding AvatarUrl}" Aspect="AspectFill" />
+                </Frame>
+
+                <!-- Інформація про користувача -->
+                <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                    <Label Text="{Binding Name}"
+                           VerticalOptions="Center"
+                           FontSize="20" 
+                           HorizontalOptions="Center" />
+
+                    <Label Text="lvl 1"
+                           VerticalOptions="End"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- Прогрес-бари -->
+            <VerticalStackLayout Padding="10" Spacing="5" VerticalOptions="Start">
+                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="247">
+                        <Label Text="Strength"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start"
+                           FontSize="14" />
+
+                        <Label Text="LVL1"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"
+                               FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <ProgressBar x:Name="progressBar1"
+                                 HeightRequest="20" 
+                                 Progress="0.5"
+                                 HorizontalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="230">
+                        <Label Text="Intelligence"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               FontSize="14" />
+
+                        <Label Text="LVL1"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"
+                               FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <ProgressBar x:Name="progressBar2"
+                                 HeightRequest="20" 
+                                 Progress="0.5"
+                                 HorizontalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="242">
+                        <Label Text="Charisma"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               FontSize="14" />
+
+                        <Label Text="LVL1"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"
+                               FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <ProgressBar x:Name="progressBar3"
+                                 HeightRequest="20" 
+                                 Progress="0.5"
+                                 HorizontalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+
+                <Label Text="Stat Guide" 
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       FontSize="28"
+                       TextColor="Black"
+                       FontAttributes="Bold"/>
+
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Label Text="Strength - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="16"
+               TextColor="Black" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Intelligence - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="Black" />     
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Charisma - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="Black" />             
+            </VerticalStackLayout>
+
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
 </ContentPage>

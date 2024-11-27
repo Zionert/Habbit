@@ -30,8 +30,14 @@ namespace Habbit
                 {
                     Preferences.Set("IsLoggedIn", true);
 
-                    // Navigate to the main application page after login
-                    await Shell.Current.GoToAsync("//StaticsPage");
+                    // Отримуємо дані користувача
+                    var user = loginResult.User;
+                    var avatarUrl = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value ?? string.Empty;
+                    var name = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "User";
+
+
+                    var route = $"//StaticsPage?AvatarUrl={Uri.EscapeDataString(avatarUrl)}&Name={Uri.EscapeDataString(name)}";
+                    await Shell.Current.GoToAsync(route);
                 }
                 else
                 {
