@@ -2,7 +2,110 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.AddPage"
-             Title="AddPage"
-             Background="Blue">
-    
+             Title="Add Task"
+             BackgroundColor="#E7E7E7">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Task Title Input -->
+            <Frame BackgroundColor="#1F1F1F" CornerRadius="8" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Task Title" TextColor="White" FontSize="14" />
+                    <Entry Placeholder="Your task..." 
+                           PlaceholderColor="#888" 
+                           TextColor="White" 
+                           BackgroundColor="Transparent" 
+                           HeightRequest="40" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Description Input -->
+            <Frame BackgroundColor="#1F1F1F" CornerRadius="8" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Description (optional)" TextColor="White" FontSize="14" />
+                    <Editor Placeholder="Add a description..." 
+                            PlaceholderColor="#888" 
+                            TextColor="White" 
+                            BackgroundColor="Transparent" 
+                            HeightRequest="100" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Selectable Habit and Goal Buttons -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                <RadioButton x:Name="HabitRadioButton" 
+                 Content="Habit" 
+                 GroupName="TaskType" 
+                 BackgroundColor="#8EC1F3" 
+                 TextColor="White" 
+                 CornerRadius="20" 
+                 WidthRequest="150" 
+                 CheckedChanged="OnHabitRadioButtonCheckedChanged" />
+
+                <RadioButton x:Name="GoalRadioButton" 
+                 Content="Goal" 
+                 GroupName="TaskType" 
+                 BackgroundColor="#B0B0B0" 
+                 TextColor="White" 
+                 CornerRadius="20" 
+                 WidthRequest="150" 
+                 CheckedChanged="OnGoalRadioButtonCheckedChanged" />
+            </HorizontalStackLayout>
+
+
+            <!-- Strength, Intelligence, Charisma Buttons -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <RadioButton x:Name="StrengthRadioButton" 
+                 Content="Strength" 
+                 GroupName="Attributes" 
+                 BackgroundColor="#8EC1F3" 
+                 TextColor="White" 
+                 CornerRadius="20" 
+                 WidthRequest="105" 
+                 CheckedChanged="OnStrengthRadioButtonCheckedChanged" />
+
+                <RadioButton x:Name="IntelligenceRadioButton" 
+                 Content="Intelligence" 
+                 GroupName="Attributes" 
+                 BackgroundColor="#B0B0B0" 
+                 TextColor="White" 
+                 CornerRadius="20" 
+                 WidthRequest="105" 
+                 CheckedChanged="OnIntelligenceRadioButtonCheckedChanged" />
+
+                <RadioButton x:Name="CharismaRadioButton" 
+                 Content="Charisma" 
+                 GroupName="Attributes" 
+                 BackgroundColor="#B0B0B0" 
+                 TextColor="White" 
+                 CornerRadius="20" 
+                 WidthRequest="105" 
+                 CheckedChanged="OnCharismaRadioButtonCheckedChanged" />
+            </HorizontalStackLayout>
+
+
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Difficulty" TextColor="#333" FontSize="14" HorizontalOptions="Center" />
+                <Slider Minimum="10" Maximum="1000" Value="500" 
+                ThumbColor="#4C4C4C" 
+                MinimumTrackColor="#4C4C4C" 
+                MaximumTrackColor="#D3D3D3"
+                WidthRequest="300" />
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="100">
+                    <Label Text="easy" TextColor="Green" FontSize="14" />
+                    <Label Text="hard" TextColor="Red" FontSize="14" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+
+            <Button Text="Add"
+                    Background="#8EC1F3"
+                    TextColor="White"
+                    CornerRadius="20"
+                    WidthRequest="120"
+                    Clicked="AddTask"
+                />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
