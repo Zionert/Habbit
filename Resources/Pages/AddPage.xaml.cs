@@ -1,3 +1,5 @@
+using Habbit.Resources.Models;
+
 namespace Habbit.Resources.Pages;
 
 public partial class AddPage : ContentPage
@@ -79,6 +81,37 @@ public partial class AddPage : ContentPage
 
     private void AddTask(object sender, EventArgs e)
     {
+        // Витягуємо дані з полів вводу та радіокнопок
+        var title = taskTitleEntry.Text; // Витягуємо з Entry
+        var type = HabitRadioButton.IsChecked ? "Habit" : "Goal";
+        var attribute = StrengthRadioButton.IsChecked ? "Strength" :
+                        IntelligenceRadioButton.IsChecked ? "Intelligence" :
+                        CharismaRadioButton.IsChecked ? "Charisma" : null;
+
+        // Перевірка введених даних
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            DisplayAlert("Error", "Task Title is required!", "OK");
+            return;
+        }
+
+        // Створюємо нову задачу
+        var newTask = new TaskItem
+        {
+            Title = title,
+            Type = type,
+            Attribute = attribute,
+            IsCompleted = false
+        };
+
+        // Додаємо в репозиторій
+        TaskRepository.Tasks.Add(newTask);
+
+        // Сповіщення користувача
+        DisplayAlert("Success", "Task added successfully!", "OK");
+
+        // Повертаємося на попередню сторінку
+        Navigation.PopAsync();
 
     }
 

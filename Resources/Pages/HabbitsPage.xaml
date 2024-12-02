@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.HabbitsPage"
              Title="HabbitsPage"
-             Background="Red">
-    
+              BackgroundColor="#E7E7E7">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="HabitsLayout" Padding="20" Spacing="10">
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>
