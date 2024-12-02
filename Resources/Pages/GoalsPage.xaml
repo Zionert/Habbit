@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Habbit.Resources.Pages.GoalsPage"
              Title="GoalsPage"
-             Background="Pink">
-    
-    
+             BackgroundColor="#E7E7E7">
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="GoalsLayout" Padding="20" Spacing="10">
+            <!-- Тут з'являтимуться цілі -->
+        </VerticalStackLayout>
+    </ScrollView>
+
+
 </ContentPage>

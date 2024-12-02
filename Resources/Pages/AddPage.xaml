@@ -11,7 +11,8 @@
             <Frame BackgroundColor="#1F1F1F" CornerRadius="8" Padding="10">
                 <VerticalStackLayout>
                     <Label Text="Task Title" TextColor="White" FontSize="14" />
-                    <Entry Placeholder="Your task..." 
+                    <Entry x:Name="taskTitleEntry"
+                           Placeholder="Your task..." 
                            PlaceholderColor="#888" 
                            TextColor="White" 
                            BackgroundColor="Transparent" 
@@ -36,8 +37,8 @@
                 <RadioButton x:Name="HabitRadioButton" 
                  Content="Habit" 
                  GroupName="TaskType" 
-                 BackgroundColor="#8EC1F3" 
-                 TextColor="White" 
+                 BackgroundColor="#B0B0B0" 
+                 TextColor="Black" 
                  CornerRadius="20" 
                  WidthRequest="150" 
                  CheckedChanged="OnHabitRadioButtonCheckedChanged" />
@@ -46,7 +47,7 @@
                  Content="Goal" 
                  GroupName="TaskType" 
                  BackgroundColor="#B0B0B0" 
-                 TextColor="White" 
+                 TextColor="Black" 
                  CornerRadius="20" 
                  WidthRequest="150" 
                  CheckedChanged="OnGoalRadioButtonCheckedChanged" />
@@ -58,8 +59,8 @@
                 <RadioButton x:Name="StrengthRadioButton" 
                  Content="Strength" 
                  GroupName="Attributes" 
-                 BackgroundColor="#8EC1F3" 
-                 TextColor="White" 
+                 BackgroundColor="#B0B0B0" 
+                 TextColor="Black" 
                  CornerRadius="20" 
                  WidthRequest="105" 
                  CheckedChanged="OnStrengthRadioButtonCheckedChanged" />
@@ -68,7 +69,7 @@
                  Content="Intelligence" 
                  GroupName="Attributes" 
                  BackgroundColor="#B0B0B0" 
-                 TextColor="White" 
+                 TextColor="Black" 
                  CornerRadius="20" 
                  WidthRequest="105" 
                  CheckedChanged="OnIntelligenceRadioButtonCheckedChanged" />
@@ -77,7 +78,7 @@
                  Content="Charisma" 
                  GroupName="Attributes" 
                  BackgroundColor="#B0B0B0" 
-                 TextColor="White" 
+                 TextColor="Black" 
                  CornerRadius="20" 
                  WidthRequest="105" 
                  CheckedChanged="OnCharismaRadioButtonCheckedChanged" />
