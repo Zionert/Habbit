@@ -35,12 +35,27 @@ public partial class HabbitsPage : ContentPage
                 Content = new Grid
                 {
                     ColumnDefinitions =
-            {
-                new ColumnDefinition { Width = GridLength.Star }, // Назва задачі
-                new ColumnDefinition { Width = GridLength.Auto }  // Кнопки
-            }
+                    {
+                         new ColumnDefinition { Width = GridLength.Star }, // Назва задачі
+                         new ColumnDefinition { Width = GridLength.Auto }  // Кнопки
+                    }
                 }
             };
+
+            var textColor = Colors.Black; // Колір за замовчуванням
+            if (habit.Attribute == "Strength")
+            {
+                textColor = Color.FromArgb("#FF6347"); // Червоний колір для Strength
+            }
+            else if (habit.Attribute == "Intelligence")
+            {
+                textColor = Color.FromArgb("#8EC1F3"); // Блакитний колір для Intelligence
+            }
+            else if (habit.Attribute == "Charisma")
+            {
+                textColor = Color.FromArgb("#FFD700"); // Золотий колір для Charisma
+            }
+
 
             // Назва задачі
             var label = new Label
@@ -48,7 +63,7 @@ public partial class HabbitsPage : ContentPage
                 Text = habit.Title,
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                TextColor = Colors.Black,
+                TextColor = textColor,
                 FontSize = 16
             };
 
@@ -94,12 +109,22 @@ public partial class HabbitsPage : ContentPage
                 Children = { completeButton, deleteButton },
                 HorizontalOptions = LayoutOptions.End,
                 VerticalOptions = LayoutOptions.Center
-            };
+            };  
 
             // Додавання елементів до сітки
             var grid = (Grid)taskFrame.Content;
             grid.Add(label, 0, 0);         // Назва задачі в перший стовпець
             grid.Add(buttonsStack, 1, 0); // Кнопки в другий стовпець
+
+            taskFrame.GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                Command = new Command(async () =>
+                {
+                    await Navigation.PushModalAsync(new EditTaskPage(habit));
+                    UpdateHabitsList(); // Оновлюємо список після повернення
+                })
+            });
+
 
             // Додавання рамки до контейнера
             HabitsLayout.Children.Add(taskFrame);
