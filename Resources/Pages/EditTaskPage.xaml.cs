@@ -12,92 +12,85 @@ public partial class EditTaskPage : ContentPage
 
         // Заповнення полів даними задачі
         taskTitleEntry.Text = _task.Title;
-        HabitRadioButton.IsChecked = _task.Type == "Habit";
-        GoalRadioButton.IsChecked = _task.Type == "Goal";
-        StrengthRadioButton.IsChecked = _task.Attribute == "Strength";
-        IntelligenceRadioButton.IsChecked = _task.Attribute == "Intelligence";
-        CharismaRadioButton.IsChecked = _task.Attribute == "Charisma";
+        HabitButton.BackgroundColor = _task.Type == "Habit" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        GoalButton.BackgroundColor = _task.Type == "Goal" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+
+        StrengthButton.BackgroundColor = _task.Attribute == "Strength" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        IntelligenceButton.BackgroundColor = _task.Attribute == "Intelligence" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        CharismaButton.BackgroundColor = _task.Attribute == "Charisma" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
     }
 
     
 
-    private void OnHabitRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void OnHabitButtonClicked(object sender, EventArgs e)
     {
-        if (e.Value) // When selected
-        {
-            HabitRadioButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            HabitRadioButton.TextColor = Colors.White;
+            HabitButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+            HabitButton.TextColor = Colors.White;
 
-            GoalRadioButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            GoalRadioButton.TextColor = Colors.Black;
-        }
+            GoalButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+            GoalButton.TextColor = Colors.Black;
+
+            _task.Type = "Habit";
     }
 
     // Goal RadioButton CheckedChanged Handler
-    private void OnGoalRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void OnGoalButtonClicked(object sender, EventArgs e)
     {
-        if (e.Value) // When selected
-        {
-            GoalRadioButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            GoalRadioButton.TextColor = Colors.White;
+            GoalButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+            GoalButton.TextColor = Colors.White;
 
-            HabitRadioButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            HabitRadioButton.TextColor = Colors.Black;
-        }
+            HabitButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+            HabitButton.TextColor = Colors.Black;
+
+            _task.Type = "Goal";
     }
 
 
     // RadioButton CheckedChanged Handlers
-    private void OnStrengthRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void OnStrengthButtonClicked(object sender, EventArgs e)
     {
-        if (e.Value) // When selected
-        {
-            StrengthRadioButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            StrengthRadioButton.TextColor = Colors.White;
-        }
-        else // When deselected
-        {
-            StrengthRadioButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            StrengthRadioButton.TextColor = Colors.Black;
-        }
+        _task.Attribute = "Strength";
+        StrengthButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+        StrengthButton.TextColor = Colors.White;
+
+        IntelligenceButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        IntelligenceButton.TextColor = Colors.Black;
+
+        CharismaButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        CharismaButton.TextColor = Colors.Black;
     }
 
-    private void OnIntelligenceRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void OnIntelligenceButtonClicked(object sender, EventArgs e)
     {
-        if (e.Value) // When selected
-        {
-            IntelligenceRadioButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            IntelligenceRadioButton.TextColor = Colors.White;
-        }
-        else // When deselected
-        {
-            IntelligenceRadioButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            IntelligenceRadioButton.TextColor = Colors.Black;
-        }
+        _task.Attribute = "Intelligence";
+        IntelligenceButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+        IntelligenceButton.TextColor = Colors.White;
+
+        StrengthButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        StrengthButton.TextColor = Colors.Black;
+
+        CharismaButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        CharismaButton.TextColor = Colors.Black;
     }
 
-    private void OnCharismaRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void OnCharismaButtonClicked(object sender, EventArgs e)
     {
-        if (e.Value) // When selected
-        {
-            CharismaRadioButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            CharismaRadioButton.TextColor = Colors.White;
-        }
-        else // When deselected
-        {
-            CharismaRadioButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            CharismaRadioButton.TextColor = Colors.Black;
-        }
+        _task.Attribute = "Charisma";
+        CharismaButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+        CharismaButton.TextColor = Colors.White;
+
+        StrengthButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        StrengthButton.TextColor = Colors.Black;
+
+        IntelligenceButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        IntelligenceButton.TextColor = Colors.Black;
     }
 
     private void SaveChanges(object sender, EventArgs e)
     {
         // Оновлення даних задачі
         _task.Title = taskTitleEntry.Text;
-        _task.Type = HabitRadioButton.IsChecked ? "Habit" : "Goal";
-        _task.Attribute = StrengthRadioButton.IsChecked ? "Strength" :
-                          IntelligenceRadioButton.IsChecked ? "Intelligence" :
-                          CharismaRadioButton.IsChecked ? "Charisma" : null;
+        
 
 
         // Повернення до попередньої сторінки

@@ -14,6 +14,16 @@ public partial class GoalsPage : ContentPage
         base.OnAppearing();
         UpdateGoalsList();
     }
+    private async void OnSwipeRight(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//HabbitsPage");  
+    }
+
+    // Swipe Left Handler: Перехід вперед
+    private async void OnSwipeLeft(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//AddPage");  
+    }
 
     private void UpdateGoalsList()
     {

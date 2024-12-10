@@ -6,6 +6,11 @@
              Background="#E7E7E7">
     <ScrollView>
 
+        <ScrollView.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
+            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
+        </ScrollView.GestureRecognizers>
+
         <!-- Структура для аватарки та імені -->
         <VerticalStackLayout Padding="20" Spacing="10">
             <!-- Контейнер для аватарки та імені користувача -->

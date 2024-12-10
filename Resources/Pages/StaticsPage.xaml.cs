@@ -35,6 +35,18 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
         BindingContext = this; // Прив'язка контексту
     }
 
-
     
+
+    private async void OnSwipeRight(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//AddPage");
+    }
+
+    // Swipe Left Handler: Перехід вперед
+    private async void OnSwipeLeft(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SettingsPage");
+    }
+
+
 }

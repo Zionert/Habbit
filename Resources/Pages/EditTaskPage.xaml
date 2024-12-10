@@ -34,54 +34,48 @@
 
             <!-- Selectable Habit and Goal Buttons -->
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-                <RadioButton x:Name="HabitRadioButton" 
-             Content="Habit" 
-             GroupName="TaskType" 
-             BackgroundColor="#B0B0B0" 
-             TextColor="Black" 
-             CornerRadius="20" 
-             WidthRequest="150" 
-             CheckedChanged="OnHabitRadioButtonCheckedChanged" />
+                <Button x:Name="HabitButton"
+                    Text="Habit"
+                    BackgroundColor="#B0B0B0"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    WidthRequest="150"
+                    Clicked="OnHabitButtonClicked" />
 
-                <RadioButton x:Name="GoalRadioButton" 
-             Content="Goal" 
-             GroupName="TaskType" 
-             BackgroundColor="#B0B0B0" 
-             TextColor="Black" 
-             CornerRadius="20" 
-             WidthRequest="150" 
-             CheckedChanged="OnGoalRadioButtonCheckedChanged" />
+                <Button x:Name="GoalButton"
+                    Text="Goal"
+                    BackgroundColor="#B0B0B0"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    WidthRequest="150"
+                    Clicked="OnGoalButtonClicked" />
             </HorizontalStackLayout>
-
 
             <!-- Strength, Intelligence, Charisma Buttons -->
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <RadioButton x:Name="StrengthRadioButton" 
-             Content="Strength" 
-             GroupName="Attributes" 
-             BackgroundColor="#B0B0B0" 
-             TextColor="Black" 
-             CornerRadius="20" 
-             WidthRequest="105" 
-             CheckedChanged="OnStrengthRadioButtonCheckedChanged" />
+                <Button x:Name="StrengthButton"
+                    Text="Strength"
+                    BackgroundColor="#B0B0B0"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    WidthRequest="105"
+                    Clicked="OnStrengthButtonClicked" />
 
-                <RadioButton x:Name="IntelligenceRadioButton" 
-             Content="Intelligence" 
-             GroupName="Attributes" 
-             BackgroundColor="#B0B0B0" 
-             TextColor="Black" 
-             CornerRadius="20" 
-             WidthRequest="105" 
-             CheckedChanged="OnIntelligenceRadioButtonCheckedChanged" />
+                <Button x:Name="IntelligenceButton"
+                    Text="Intelligence"
+                    BackgroundColor="#B0B0B0"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    WidthRequest="105"
+                    Clicked="OnIntelligenceButtonClicked" />
 
-                <RadioButton x:Name="CharismaRadioButton" 
-             Content="Charisma" 
-             GroupName="Attributes" 
-             BackgroundColor="#B0B0B0" 
-             TextColor="Black" 
-             CornerRadius="20" 
-             WidthRequest="105" 
-             CheckedChanged="OnCharismaRadioButtonCheckedChanged" />
+                <Button x:Name="CharismaButton"
+                    Text="Charisma"
+                    BackgroundColor="#B0B0B0"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    WidthRequest="105"
+                    Clicked="OnCharismaButtonClicked" />
             </HorizontalStackLayout>
 
 
