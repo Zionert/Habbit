@@ -12,7 +12,7 @@
             </Grid.RowDefinitions>
             <!-- Login View -->
             <StackLayout x:Name="LoginView" Grid.Row="0">
-                <StackLayout BackgroundColor="#F6F6F6">
+                <StackLayout BackgroundColor="#E7E7E7">
                     <Grid RowDefinitions="125, Auto, Auto, Auto"
                           ColumnDefinitions="*"
                           Padding="40, 30, 40, 10"
