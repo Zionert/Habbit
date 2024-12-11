@@ -15,6 +15,11 @@ public partial class HabbitsPage : ContentPage
         UpdateHabitsList();
     }
 
+    private async void OnSwipeLeft(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//GoalsPage"); 
+    }
+
     private void UpdateHabitsList()
     {
         HabitsLayout.Children.Clear();

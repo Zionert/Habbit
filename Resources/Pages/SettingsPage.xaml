@@ -5,20 +5,29 @@
              Title="SettingsPage"
              Background="#E7E7E7">
 
-    <Grid VerticalOptions="Center" HorizontalOptions="Center">
-        
 
+
+
+    <ScrollView>
+
+        <ScrollView.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
+        </ScrollView.GestureRecognizers>
+
+
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <Button Text="Log Out"
-                    BackgroundColor="#F03716"
-                    TextColor="White"
-                    CornerRadius="25"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    FontSize="Large"
-                    Padding="10"
-                    Clicked="LogOut"
-                    />
-    
-    </Grid>
+            BackgroundColor="#F03716"
+            TextColor="White"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            CornerRadius="25"
+            FontSize="Large"
+            Padding="10"
+            Clicked="LogOut" />
+        </StackLayout>
+
+
+    </ScrollView>
 
 </ContentPage>
