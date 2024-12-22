@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Auth0.OidcClient;
 using Habbit.Resources.Pages;
+using Habbit.Services;
+using System.Net.Http;
+
 
 namespace Habbit
 {
@@ -23,6 +26,7 @@ namespace Habbit
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddHttpClient();
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<SettingsPage>();
@@ -34,6 +38,8 @@ namespace Habbit
                 PostLogoutRedirectUri = "habbit://callback/",
                 Scope = "openid profile email"
             }));
+            builder.Services.AddSingleton<HabitService>();
+
 
             return builder.Build();
         }
