@@ -3,20 +3,25 @@ using Auth0.OidcClient;
 using Habbit.Resources.Pages;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using Habbit.Services;
+using IdentityModel.OidcClient;
+using Habbit.Services;
 
 namespace Habbit
 {
     public partial class MainPage : ContentPage
     {
         private readonly Auth0Client auth0Client;
+        private readonly HabitService habitService;
 
-        public MainPage(Auth0Client client)
+        public MainPage(Auth0Client client, HabitService userService)
         {
             InitializeComponent();
             auth0Client = client;
+            this.habitService = userService;
         }
 
-
+        
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
@@ -32,12 +37,22 @@ namespace Habbit
 
                     // Отримуємо дані користувача
                     var user = loginResult.User;
+                    var auth0Id = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? throw new Exception("Auth0Id is missing.");
                     var avatarUrl = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value ?? string.Empty;
+                    var username = user.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value ?? "DefaultUsername";
                     var name = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "User";
-
-
-                    var route = $"//StaticsPage?AvatarUrl={Uri.EscapeDataString(avatarUrl)}&Name={Uri.EscapeDataString(name)}";
-                    await Shell.Current.GoToAsync(route);
+                    var email = user.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? "no-email@example.com";
+                    bool isSuccess = await habitService.CreateUserAsync(auth0Id, username, name, email, avatarUrl, "light");
+                    if (isSuccess)
+                    {
+                        // Якщо все добре, переходимо на наступну сторінку
+                        var route = $"//StaticsPage?AvatarUrl={Uri.EscapeDataString(avatarUrl)}&Name={Uri.EscapeDataString(name)}";
+                        await Shell.Current.GoToAsync(route);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Failed to create user.", "OK");
+                    }
                 }
                 else
                 {

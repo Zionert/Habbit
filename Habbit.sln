@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Habbit", "Habbit.csproj", "{30E02373-BBDB-4F9C-A28A-2B6C9A4CC382}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habbit_Api", "..\Habbit_Api\Habbit_Api.csproj", "{408C47F2-4527-4E2F-BCE8-584BF48E0059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{30E02373-BBDB-4F9C-A28A-2B6C9A4CC382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30E02373-BBDB-4F9C-A28A-2B6C9A4CC382}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30E02373-BBDB-4F9C-A28A-2B6C9A4CC382}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{408C47F2-4527-4E2F-BCE8-584BF48E0059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408C47F2-4527-4E2F-BCE8-584BF48E0059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408C47F2-4527-4E2F-BCE8-584BF48E0059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408C47F2-4527-4E2F-BCE8-584BF48E0059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
