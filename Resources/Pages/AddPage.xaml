@@ -5,11 +5,7 @@
              Title="Add Task"
              BackgroundColor="#E7E7E7">
     <ScrollView>
-        <ScrollView.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
-            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
-        </ScrollView.GestureRecognizers>
-        
+                
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <!-- Task Title Input -->
@@ -86,7 +82,7 @@
 
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Difficulty" TextColor="#333" FontSize="14" HorizontalOptions="Center" />
-                <Slider Minimum="10" Maximum="1000" Value="500" 
+                <Slider Minimum="1" Maximum="100" Value="50" 
                 ThumbColor="#4C4C4C" 
                 MinimumTrackColor="#4C4C4C" 
                 MaximumTrackColor="#D3D3D3"

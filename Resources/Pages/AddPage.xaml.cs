@@ -9,25 +9,15 @@ public partial class AddPage : ContentPage
 		InitializeComponent();
 	}
 
-    private string selectedType = null;      // Для "Habit" або "Goal"
-    private string selectedAttribute = null; // Для "Strength", "Intelligence", "Charisma"
+    private TaskType? selectedType = null;      // Для "Habit" або "Goal"
+    private TaskAttribute? selectedAttribute = null; // Для "Strength", "Intelligence", "Charisma"
 
 
-    private async void OnSwipeRight(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//GoalsPage");  
-    }
-
-    // Swipe Left Handler: Перехід вперед
-    private async void OnSwipeLeft(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//StaticsPage");  
-    }
     private void OnHabitButtonClicked(object sender, EventArgs e)
     {
         
 
-            selectedType = "Habit";
+            selectedType = TaskType.Habbit;
             HabitButton.BackgroundColor = Color.FromArgb("#8EC1F3");
             HabitButton.TextColor = Colors.White;
 
@@ -41,7 +31,7 @@ public partial class AddPage : ContentPage
     {
 
 
-            selectedType = "Goal";
+            selectedType = TaskType.Goal;
             GoalButton.BackgroundColor = Color.FromArgb("#8EC1F3");
             GoalButton.TextColor = Colors.White;
 
@@ -54,7 +44,7 @@ public partial class AddPage : ContentPage
     // RadioButton CheckedChanged Handlers
     private void OnStrengthButtonClicked(object sender, EventArgs e)
     {
-        selectedAttribute = "Strength";
+        selectedAttribute = TaskAttribute.Strength;
         StrengthButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         StrengthButton.TextColor = Colors.White;
 
@@ -67,7 +57,7 @@ public partial class AddPage : ContentPage
 
     private void OnIntelligenceButtonClicked(object sender, EventArgs e)
     {
-        selectedAttribute = "Intelligence";
+        selectedAttribute = TaskAttribute.Intelligence;
         IntelligenceButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         IntelligenceButton.TextColor = Colors.White;
 
@@ -80,7 +70,7 @@ public partial class AddPage : ContentPage
 
     private void OnCharismaButtonClicked(object sender, EventArgs e)
     {
-        selectedAttribute = "Charisma";
+        selectedAttribute = TaskAttribute.Charisma;
         CharismaButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         CharismaButton.TextColor = Colors.White;
 
@@ -99,8 +89,17 @@ public partial class AddPage : ContentPage
         var attribute = selectedAttribute;
 
         // Перевірка введених даних
-        if (string.IsNullOrEmpty(type) || string.IsNullOrEmpty(attribute))
+        if (type != TaskType.Habbit && type != TaskType.Goal)
         {
+            DisplayAlert("Error", "Task Type is required!", "OK");
+            return;
+        }
+        if(attribute != TaskAttribute.Strength &&  attribute != TaskAttribute.Charisma && attribute != TaskAttribute.Intelligence)
+        {
+            DisplayAlert("Error", "Task Attribure is required!", "OK");
+            return;
+        }
+        if (title == null) {
             DisplayAlert("Error", "Task Title is required!", "OK");
             return;
         }

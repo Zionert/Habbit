@@ -14,23 +14,14 @@ public partial class GoalsPage : ContentPage
         base.OnAppearing();
         UpdateGoalsList();
     }
-    private async void OnSwipeRight(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//HabbitsPage");  
-    }
 
-    // Swipe Left Handler: Перехід вперед
-    private async void OnSwipeLeft(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//AddPage");  
-    }
 
     private void UpdateGoalsList()
     {
         GoalsLayout.Children.Clear();
 
         // Вибираємо задачі типу "Goal"
-        var goals = TaskRepository.Tasks.Where(t => t.Type == "Goal");
+        var goals = TaskRepository.Tasks.Where(t => t.Type == TaskType.Goal);
 
         foreach (var goal in goals)
         {
@@ -53,15 +44,15 @@ public partial class GoalsPage : ContentPage
             };
 
             var textColor = Colors.Black; // Колір за замовчуванням
-            if (goal.Attribute == "Strength")
+            if (goal.Attribute == TaskAttribute.Strength)
             {
                 textColor = Color.FromArgb("#FF6347"); // Червоний для Strength
             }
-            else if (goal.Attribute == "Intelligence")
+            else if (goal.Attribute == TaskAttribute.Intelligence)
             {
                 textColor = Color.FromArgb("#8EC1F3"); // Блакитний для Intelligence
             }
-            else if (goal.Attribute == "Charisma")
+            else if (goal.Attribute == TaskAttribute.Charisma)
             {
                 textColor = Color.FromArgb("#FFD700"); // Золотий для Charisma
             }

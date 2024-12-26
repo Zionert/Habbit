@@ -7,11 +7,7 @@
 
     <ScrollView>
 
-        <ScrollView.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
-            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
-        </ScrollView.GestureRecognizers>
-        <VerticalStackLayout x:Name="GoalsLayout" Padding="20" Spacing="10">
+                <VerticalStackLayout x:Name="GoalsLayout" Padding="20" Spacing="10">
             <!-- Тут з'являтимуться цілі -->
         </VerticalStackLayout>
     </ScrollView>

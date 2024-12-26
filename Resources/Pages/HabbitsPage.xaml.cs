@@ -15,17 +15,13 @@ public partial class HabbitsPage : ContentPage
         UpdateHabitsList();
     }
 
-    private async void OnSwipeLeft(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//GoalsPage"); 
-    }
 
     private void UpdateHabitsList()
     {
         HabitsLayout.Children.Clear();
 
         // Витягуємо задачі типу "Habit"
-        var habits = TaskRepository.Tasks.Where(t => t.Type == "Habit");
+        var habits = TaskRepository.Tasks.Where(t => t.Type == TaskType.Habbit);
 
         foreach (var habit in habits)
         {
@@ -48,15 +44,15 @@ public partial class HabbitsPage : ContentPage
             };
 
             var textColor = Colors.Black; // Колір за замовчуванням
-            if (habit.Attribute == "Strength")
+            if (habit.Attribute == TaskAttribute.Strength)
             {
                 textColor = Color.FromArgb("#FF6347"); // Червоний колір для Strength
             }
-            else if (habit.Attribute == "Intelligence")
+            else if (habit.Attribute == TaskAttribute.Intelligence)
             {
                 textColor = Color.FromArgb("#8EC1F3"); // Блакитний колір для Intelligence
             }
-            else if (habit.Attribute == "Charisma")
+            else if (habit.Attribute == TaskAttribute.Charisma)
             {
                 textColor = Color.FromArgb("#FFD700"); // Золотий колір для Charisma
             }

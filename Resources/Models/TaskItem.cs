@@ -9,8 +9,18 @@ namespace Habbit.Resources.Models
     public class TaskItem
     {
         public string Title { get; set; }
-        public string Type { get; set; } // "Habit" або "Goal"
-        public string Attribute { get; set; } // "Strength", "Intelligence", "Charisma"
+        public TaskType? Type { get; set; } // "Habit" або "Goal"
+        public TaskAttribute? Attribute { get; set; } // "Strength", "Intelligence", "Charisma"
         public bool IsCompleted { get; set; } = false;
+    }
+
+    public enum TaskType { 
+        Habbit,
+        Goal
+    }
+    public enum TaskAttribute {
+        Strength,
+        Intelligence,
+        Charisma
     }
 }

@@ -14,10 +14,7 @@ public partial class SettingsPage : ContentPage
         _auth0Client = auth0Client;
     }
 
-    private async void OnSwipeRight(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//StaticsPage");
-    }
+
 
     private async void LogOut(object sender, EventArgs e)
     {

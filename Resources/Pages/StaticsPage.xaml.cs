@@ -37,16 +37,7 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
 
     
 
-    private async void OnSwipeRight(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//AddPage");
-    }
 
-    // Swipe Left Handler: Οεπευ³δ βοεπεδ
-    private async void OnSwipeLeft(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//SettingsPage");
-    }
 
 
 }
