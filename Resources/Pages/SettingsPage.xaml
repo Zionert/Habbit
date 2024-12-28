@@ -10,9 +10,7 @@
 
     <ScrollView>
 
-        <ScrollView.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
-        </ScrollView.GestureRecognizers>
+        
 
 
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">

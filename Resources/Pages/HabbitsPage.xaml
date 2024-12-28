@@ -9,9 +9,7 @@
     
     <ScrollView>
 
-        <ScrollView.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
-        </ScrollView.GestureRecognizers>
+       
         
         <VerticalStackLayout x:Name="HabitsLayout" Padding="20" Spacing="10">
 

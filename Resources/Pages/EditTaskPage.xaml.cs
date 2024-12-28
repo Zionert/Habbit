@@ -12,12 +12,12 @@ public partial class EditTaskPage : ContentPage
 
         // Заповнення полів даними задачі
         taskTitleEntry.Text = _task.Title;
-        HabitButton.BackgroundColor = _task.Type == "Habit" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
-        GoalButton.BackgroundColor = _task.Type == "Goal" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        HabitButton.BackgroundColor = _task.Type == TaskType.Habbit ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        GoalButton.BackgroundColor = _task.Type == TaskType.Goal ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
 
-        StrengthButton.BackgroundColor = _task.Attribute == "Strength" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
-        IntelligenceButton.BackgroundColor = _task.Attribute == "Intelligence" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
-        CharismaButton.BackgroundColor = _task.Attribute == "Charisma" ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        StrengthButton.BackgroundColor = _task.Attribute == TaskAttribute.Strength ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        IntelligenceButton.BackgroundColor = _task.Attribute == TaskAttribute.Intelligence ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        CharismaButton.BackgroundColor = _task.Attribute == TaskAttribute.Charisma ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
     }
 
     
@@ -30,7 +30,7 @@ public partial class EditTaskPage : ContentPage
             GoalButton.BackgroundColor = Color.FromArgb("#B0B0B0");
             GoalButton.TextColor = Colors.Black;
 
-            _task.Type = "Habit";
+            _task.Type = TaskType.Habbit;
     }
 
     // Goal RadioButton CheckedChanged Handler
@@ -42,14 +42,14 @@ public partial class EditTaskPage : ContentPage
             HabitButton.BackgroundColor = Color.FromArgb("#B0B0B0");
             HabitButton.TextColor = Colors.Black;
 
-            _task.Type = "Goal";
+            _task.Type = TaskType.Goal;
     }
 
 
     // RadioButton CheckedChanged Handlers
     private void OnStrengthButtonClicked(object sender, EventArgs e)
     {
-        _task.Attribute = "Strength";
+        _task.Attribute = TaskAttribute.Strength;
         StrengthButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         StrengthButton.TextColor = Colors.White;
 
@@ -62,7 +62,7 @@ public partial class EditTaskPage : ContentPage
 
     private void OnIntelligenceButtonClicked(object sender, EventArgs e)
     {
-        _task.Attribute = "Intelligence";
+        _task.Attribute = TaskAttribute.Intelligence;
         IntelligenceButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         IntelligenceButton.TextColor = Colors.White;
 
@@ -75,7 +75,7 @@ public partial class EditTaskPage : ContentPage
 
     private void OnCharismaButtonClicked(object sender, EventArgs e)
     {
-        _task.Attribute = "Charisma";
+        _task.Attribute = TaskAttribute.Charisma;
         CharismaButton.BackgroundColor = Color.FromArgb("#8EC1F3");
         CharismaButton.TextColor = Colors.White;
 

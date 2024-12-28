@@ -6,10 +6,7 @@
              Background="#E7E7E7">
     <ScrollView>
 
-        <ScrollView.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeLeft" />
-            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeRight" />
-        </ScrollView.GestureRecognizers>
+        
 
         <!-- Структура для аватарки та імені -->
         <VerticalStackLayout Padding="20" Spacing="10">
@@ -53,7 +50,7 @@
 
                     <ProgressBar x:Name="progressBar1"
                                  HeightRequest="20" 
-                                 Progress="0.5"
+                                 Progress="0"
                                  HorizontalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
 
@@ -72,7 +69,7 @@
 
                     <ProgressBar x:Name="progressBar2"
                                  HeightRequest="20" 
-                                 Progress="0.5"
+                                 Progress="0"
                                  HorizontalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
 
@@ -91,7 +88,7 @@
 
                     <ProgressBar x:Name="progressBar3"
                                  HeightRequest="20" 
-                                 Progress="0.5"
+                                 Progress="0"
                                  HorizontalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
