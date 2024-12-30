@@ -26,7 +26,7 @@
                            FontSize="20" 
                            HorizontalOptions="Center" />
 
-                    <Label Text="lvl 1"
+                    <Label x:Name="labelMain" Text="lvl 1"
                            VerticalOptions="End"
                            FontSize="14"
                            HorizontalOptions="Center"/>
@@ -42,13 +42,13 @@
                            HorizontalOptions="Start"
                            FontSize="14" />
 
-                        <Label Text="LVL1"
+                        <Label x:Name="labelStrengh" Text="LVL1"
                                HorizontalOptions="End"
                                VerticalOptions="Center"
                                FontSize="14" />
                     </HorizontalStackLayout>
 
-                    <ProgressBar x:Name="progressBar1"
+                    <ProgressBar x:Name="progressBarStrengh"
                                  HeightRequest="20" 
                                  Progress="0"
                                  HorizontalOptions="FillAndExpand"/>
@@ -61,13 +61,13 @@
                                HorizontalOptions="Start"
                                FontSize="14" />
 
-                        <Label Text="LVL1"
+                        <Label x:Name="labelIntelligence" Text="LVL1"
                                HorizontalOptions="End"
                                VerticalOptions="Center"
                                FontSize="14" />
                     </HorizontalStackLayout>
 
-                    <ProgressBar x:Name="progressBar2"
+                    <ProgressBar x:Name="progressBarIntelligence"
                                  HeightRequest="20" 
                                  Progress="0"
                                  HorizontalOptions="FillAndExpand"/>
@@ -80,13 +80,13 @@
                                HorizontalOptions="Start"
                                FontSize="14" />
 
-                        <Label Text="LVL1"
+                        <Label x:Name="labelCharisma" Text="LVL1"
                                HorizontalOptions="End"
                                VerticalOptions="Center"
                                FontSize="14" />
                     </HorizontalStackLayout>
 
-                    <ProgressBar x:Name="progressBar3"
+                    <ProgressBar x:Name="progressBarCharisma"
                                  HeightRequest="20" 
                                  Progress="0"
                                  HorizontalOptions="FillAndExpand"/>

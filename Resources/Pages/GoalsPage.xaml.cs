@@ -1,4 +1,5 @@
 ﻿using Habbit.Resources.Models;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Habbit.Resources.Pages;
 
@@ -14,6 +15,10 @@ public partial class GoalsPage : ContentPage
         base.OnAppearing();
         UpdateGoalsList();
     }
+
+    public record ProgressUpdatedMessage1(double ProgressDelta1);
+    public record ProgressUpdatedMessage2(double ProgressDelta2);
+    public record ProgressUpdatedMessage3(double ProgressDelta3);
 
 
     private void UpdateGoalsList()
@@ -84,7 +89,23 @@ public partial class GoalsPage : ContentPage
             {
                 goal.IsCompleted = true;
                 DisplayAlert("Success", $"{goal.Title} completed!", "OK");
+                TaskRepository.Tasks.Remove(goal);
                 UpdateGoalsList(); // Оновлюємо список
+
+                if (goal.Attribute == TaskAttribute.Strength)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(goal.Difficulty / 100));
+                }
+
+                if (goal.Attribute == TaskAttribute.Intelligence)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(goal.Difficulty / 100));
+                }
+
+                if (goal.Attribute == TaskAttribute.Charisma)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(goal.Difficulty / 100));
+                }
             };
 
             // Кнопка видалення цілі

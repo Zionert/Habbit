@@ -12,6 +12,7 @@ namespace Habbit.Resources.Models
         public TaskType? Type { get; set; } // "Habit" або "Goal"
         public TaskAttribute? Attribute { get; set; } // "Strength", "Intelligence", "Charisma"
         public bool IsCompleted { get; set; } = false;
+        public double Difficulty { get; set; }
     }
 
     public enum TaskType { 
