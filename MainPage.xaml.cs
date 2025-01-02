@@ -42,7 +42,7 @@ namespace Habbit
                     var username = user.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value ?? "DefaultUsername";
                     var name = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "User";
                     var email = user.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? "no-email@example.com";
-                    bool isSuccess = await habitService.CreateUserAsync(auth0Id, username, name, email, avatarUrl, "light");
+                    var isSuccess = await habitService.EnsureUserExistsAsync(auth0Id, username, name, email, avatarUrl, "light");
                     if (isSuccess)
                     {
                         // Якщо все добре, переходимо на наступну сторінку
