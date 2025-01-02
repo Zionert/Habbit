@@ -35,7 +35,7 @@ namespace Habbit.Services
             var json = JsonSerializer.Serialize(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("http://192.168.0.4:5233/api/users", content);
+            var response = await _httpClient.PostAsync("https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users", content);
             if (!response.IsSuccessStatusCode)
             {
                 var errorDetails = await response.Content.ReadAsStringAsync();
