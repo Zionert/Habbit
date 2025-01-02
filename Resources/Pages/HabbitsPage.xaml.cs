@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using Habbit.Resources.Models;
 
 namespace Habbit.Resources.Pages;
@@ -14,6 +15,10 @@ public partial class HabbitsPage : ContentPage
         base.OnAppearing();
         UpdateHabitsList();
     }
+
+    public record ProgressUpdatedMessage1(double ProgressDelta1);
+    public record ProgressUpdatedMessage2(double ProgressDelta2);
+    public record ProgressUpdatedMessage3(double ProgressDelta3);
 
 
     private void UpdateHabitsList()
@@ -84,6 +89,21 @@ public partial class HabbitsPage : ContentPage
                 habit.IsCompleted = true;
                 DisplayAlert("Success", $"{habit.Title} completed!", "OK");
                 UpdateHabitsList(); // Оновлюємо список
+
+                if (habit.Attribute == TaskAttribute.Strength)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(habit.Difficulty / 100));
+                }
+
+                if (habit.Attribute == TaskAttribute.Intelligence)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(habit.Difficulty / 100));
+                }
+
+                if (habit.Attribute == TaskAttribute.Charisma)
+                {
+                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(habit.Difficulty / 100));
+                }
             };
 
             // Кнопка видалення задачі

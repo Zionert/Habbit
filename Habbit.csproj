@@ -67,6 +67,7 @@
 		<PackageReference Include="Auth0.Core" Version="7.29.0" />
 		<PackageReference Include="Auth0.ManagementApi" Version="7.29.0" />
 		<PackageReference Include="Auth0.OidcClient.MAUI" Version="1.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />

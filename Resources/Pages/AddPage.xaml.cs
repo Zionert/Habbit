@@ -87,6 +87,7 @@ public partial class AddPage : ContentPage
         var title = taskTitleEntry.Text; // ¬ит€гуЇмо з Entry
         var type = selectedType;        // ¬ит€гуЇмо вибраний тип ("Habit" або "Goal")
         var attribute = selectedAttribute;
+        var difficulty = SliderDifficulty.Value;
 
         // ѕерев≥рка введених даних
         if (type != TaskType.Habbit && type != TaskType.Goal)
@@ -110,7 +111,8 @@ public partial class AddPage : ContentPage
             Title = title,
             Type = type,
             Attribute = attribute,
-            IsCompleted = false
+            IsCompleted = false,
+            Difficulty = difficulty
         };
 
         // ƒодаЇмо в репозитор≥й
