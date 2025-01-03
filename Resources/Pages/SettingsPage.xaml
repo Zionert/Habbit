@@ -19,7 +19,7 @@
             TextColor="White"
             VerticalOptions="Center"
             HorizontalOptions="Center"
-            CornerRadius="25"
+            CornerRadius="26"
             FontSize="Large"
             Padding="10"
             Clicked="LogOut" />
