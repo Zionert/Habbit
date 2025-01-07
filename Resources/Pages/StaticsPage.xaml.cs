@@ -40,8 +40,8 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
         }
     }
     public StaticsPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         BindingContext = this; // Прив'язка контексту
 
         WeakReferenceMessenger.Default.Register<GoalsPage.ProgressUpdatedMessage1>(this, (r, message) =>

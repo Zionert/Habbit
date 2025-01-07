@@ -23,6 +23,8 @@ namespace Habbit
                     fonts.AddFont("Font Awesome 6 Brands-Regular-400.otf", "FontAwesomeBrands");
                 });
 
+
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
@@ -38,7 +40,12 @@ namespace Habbit
                 PostLogoutRedirectUri = "habbit://callback/",
                 Scope = "openid profile email"
             }));
+            builder.Services.AddSingleton<AddPage>();
+            builder.Services.AddSingleton<GoalsPage>();
+            builder.Services.AddSingleton<HabbitsPage>();
+            builder.Services.AddSingleton<StaticsPage>();
             builder.Services.AddSingleton<HabitService>();
+            builder.Services.AddSingleton<TaskService>();
 
 
             return builder.Build();

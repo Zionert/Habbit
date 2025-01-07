@@ -38,6 +38,7 @@ namespace Habbit
                     // Отримуємо дані користувача
                     var user = loginResult.User;
                     var auth0Id = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? throw new Exception("Auth0Id is missing.");
+                    Preferences.Set("Auth0Id", auth0Id);
                     var avatarUrl = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value ?? string.Empty;
                     var username = user.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value ?? "DefaultUsername";
                     var name = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? "User";
@@ -70,6 +71,8 @@ namespace Habbit
                 await Shell.Current.GoToAsync("//MainPage");
             }
         }
+        
+
 
     }
 }

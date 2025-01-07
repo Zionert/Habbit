@@ -4,8 +4,8 @@ namespace Habbit.Resources.Pages;
 
 public partial class EditTaskPage : ContentPage
 {
-    private TaskItem _task;
-    public EditTaskPage(TaskItem task)
+    private Habbit.Resources.Models.Task _task;
+    public EditTaskPage(Habbit.Resources.Models.Task task)
 	{
 		InitializeComponent();
         _task = task;

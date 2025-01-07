@@ -1,13 +1,18 @@
 using Habbit.Resources.Models;
+using Habbit.Services;
+
+
 
 namespace Habbit.Resources.Pages;
 
 public partial class AddPage : ContentPage
 {
-	public AddPage()
+    private readonly TaskService _taskService;
+    public AddPage(TaskService taskService)
 	{
 		InitializeComponent();
-	}
+        _taskService = taskService;
+    }
 
     private TaskType? selectedType = null;      // Для "Habit" або "Goal"
     private TaskAttribute? selectedAttribute = null; // Для "Strength", "Intelligence", "Charisma"
@@ -81,7 +86,7 @@ public partial class AddPage : ContentPage
         IntelligenceButton.TextColor = Colors.Black;
     }
 
-    private void AddTask(object sender, EventArgs e)
+    private async void AddTask(object sender, EventArgs e)
     {
         // Витягуємо дані з полів вводу та радіокнопок
         var title = taskTitleEntry.Text; // Витягуємо з Entry
@@ -90,39 +95,48 @@ public partial class AddPage : ContentPage
         var difficulty = SliderDifficulty.Value;
 
         // Перевірка введених даних
-        if (type != TaskType.Habbit && type != TaskType.Goal)
+        if (type == null || attribute == null)
         {
-            DisplayAlert("Error", "Task Type is required!", "OK");
+            await DisplayAlert("Error", "Task Type and Attribute are required!", "OK");
             return;
         }
-        if(attribute != TaskAttribute.Strength &&  attribute != TaskAttribute.Charisma && attribute != TaskAttribute.Intelligence)
+        if (string.IsNullOrEmpty(title))
         {
-            DisplayAlert("Error", "Task Attribure is required!", "OK");
-            return;
-        }
-        if (title == null) {
-            DisplayAlert("Error", "Task Title is required!", "OK");
+            await DisplayAlert("Error", "Task Title is required!", "OK");
             return;
         }
 
+        var userId = Preferences.Get("Auth0Id", null);
+        if (string.IsNullOrEmpty(userId))
+        {
+            await DisplayAlert("Error", "User is not logged in.", "OK");
+            return;
+        }
         // Створюємо нову задачу
-        var newTask = new TaskItem
+        var newTask = new Habbit.Resources.Models.Task
         {
             Title = title,
-            Type = type,
-            Attribute = attribute,
-            IsCompleted = false,
-            Difficulty = difficulty
+            UserId = userId,
+            Type = type.Value,
+            Attribute = attribute.Value,
+            CompletionDate = null,
+            Description = "",
+            Score = difficulty
         };
 
         // Додаємо в репозиторій
-        TaskRepository.Tasks.Add(newTask);
+        var createdTask = await _taskService.CreateAsync(newTask);
 
         // Сповіщення користувача
-        DisplayAlert("Success", "Task added successfully!", "OK");
-
-        // Повертаємося на попередню сторінку
-        Navigation.PopAsync();
+        if (createdTask != null)
+        {
+            await DisplayAlert("Success", "Task added successfully!", "OK");
+            await Navigation.PopAsync();
+        }
+        else
+        {
+            await DisplayAlert("Error", "Failed to create task.", "OK");
+        }
 
     }
 

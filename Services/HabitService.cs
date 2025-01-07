@@ -10,7 +10,6 @@ namespace Habbit.Services
     public class HabitService
     {
         private readonly HttpClient _httpClient;
-
         public HabitService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
@@ -77,5 +76,133 @@ namespace Habbit.Services
             Console.WriteLine("User already exists.");
             return true; // Користувач існує, тому не потрібно нічого створювати
         }
+
+        // Отримання Strength
+        // Отримання Strength
+        public async Task<double?> GetStrengthProgressAsync(string auth0Id)
+        {
+            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/strength");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<dynamic>();
+                return (double?)result?.Strength;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null; // Користувача або дані немає
+            }
+            else
+            {
+                throw new Exception($"Error fetching Strength progress: {response.StatusCode}");
+            }
+        }
+
+        // Отримання Intelligence
+        public async Task<double?> GetIntelligenceProgressAsync(string auth0Id)
+        {
+            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<dynamic>();
+                return (double?)result?.Intelligence;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null; // Користувача або дані немає
+            }
+            else
+            {
+                throw new Exception($"Error fetching Intelligence progress: {response.StatusCode}");
+            }
+        }
+
+        // Отримання Charisma
+        public async Task<double?> GetCharismaProgressAsync(string auth0Id)
+        {
+            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<dynamic>();
+                return (double?)result?.Charisma;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null; // Користувача або дані немає
+            }
+            else
+            {
+                throw new Exception($"Error fetching Charisma progress: {response.StatusCode}");
+            }
+        }
+
+        // Оновлення прогресу Strength
+        public async Task<bool> UpdateAttributeProgressAsync(string auth0Id, TaskAttribute attribute, double increment)
+        {
+            var payload = new UpdateProgressRequest
+            {
+                Attribute = attribute,
+                Increment = increment
+            };
+
+            var json = JsonSerializer.Serialize(payload);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/update-progress", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true; // Успішне оновлення
+            }
+            else
+            {
+                var errorDetails = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error updating progress: {errorDetails}");
+                return false;
+            }
+        }
+
+
+        // Оновлення прогресу Intelligence
+        public async Task<bool> UpdateIntelligenceProgressAsync(string auth0Id, double intelligenceProgress)
+        {
+            var userStats = new
+            {
+                Stats = new
+                {
+                    CurrentProgressIntelligence = intelligenceProgress
+                }
+            };
+
+            var json = JsonSerializer.Serialize(userStats);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence", content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        // Оновлення прогресу Charisma
+        public async Task<bool> UpdateCharismaProgressAsync(string auth0Id, double charismaProgress)
+        {
+            var userStats = new
+            {
+                Stats = new
+                {
+                    CurrentProgressCharisma = charismaProgress
+                }
+            };
+
+            var json = JsonSerializer.Serialize(userStats);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma", content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+
     }
 }

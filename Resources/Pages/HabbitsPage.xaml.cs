@@ -1,14 +1,19 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Habbit.Resources.Models;
+using Habbit.Services;
 
 namespace Habbit.Resources.Pages;
 
 public partial class HabbitsPage : ContentPage
 {
-	public HabbitsPage()
+    private readonly TaskService _taskService;
+    private readonly HabitService _habitService;
+    public HabbitsPage(TaskService taskService, HabitService habitService)
 	{
 		InitializeComponent();
-	}
+        _taskService = taskService;
+        _habitService = habitService;
+    }
 
     protected override void OnAppearing()
     {
@@ -21,12 +26,21 @@ public partial class HabbitsPage : ContentPage
     public record ProgressUpdatedMessage3(double ProgressDelta3);
 
 
-    private void UpdateHabitsList()
+    private async void UpdateHabitsList()
     {
         HabitsLayout.Children.Clear();
 
         // Витягуємо задачі типу "Habit"
-        var habits = TaskRepository.Tasks.Where(t => t.Type == TaskType.Habbit);
+        var userId = Preferences.Get("Auth0Id", null);
+        if (string.IsNullOrEmpty(userId))
+        {
+            await DisplayAlert("Error", "User is not logged in.", "OK");
+            return;
+        }
+        var tasks = await _taskService.GetByUserIdAsync(userId);
+
+        // Вибираємо задачі типу "Goal"
+        var habits = tasks.Where(t => t.Type == TaskType.Habbit).ToList();
 
         foreach (var habit in habits)
         {
@@ -84,25 +98,25 @@ public partial class HabbitsPage : ContentPage
                 HeightRequest = 40
             };
 
-            completeButton.Clicked += (s, e) =>
+            completeButton.Clicked += async(s, e) =>
             {
-                habit.IsCompleted = true;
                 DisplayAlert("Success", $"{habit.Title} completed!", "OK");
                 UpdateHabitsList(); // Оновлюємо список
-
-                if (habit.Attribute == TaskAttribute.Strength)
+                var success = await _habitService.UpdateAttributeProgressAsync(userId, habit.Attribute, habit.Score / 100);
+                if (success)
                 {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(habit.Difficulty / 100));
-                }
-
-                if (habit.Attribute == TaskAttribute.Intelligence)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(habit.Difficulty / 100));
-                }
-
-                if (habit.Attribute == TaskAttribute.Charisma)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(habit.Difficulty / 100));
+                    switch (habit.Attribute)
+                    {
+                        case TaskAttribute.Strength:
+                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(habit.Score / 100));
+                            break;
+                        case TaskAttribute.Intelligence:
+                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(habit.Score / 100));
+                            break;
+                        case TaskAttribute.Charisma:
+                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(habit.Score / 100));
+                            break;
+                    }
                 }
             };
 
@@ -119,7 +133,7 @@ public partial class HabbitsPage : ContentPage
 
             deleteButton.Clicked += (s, e) =>
             {
-                TaskRepository.Tasks.Remove(habit);
+                _taskService.DeleteAsync(habit.Id);
                 UpdateHabitsList(); // Оновлюємо список
             };
 
