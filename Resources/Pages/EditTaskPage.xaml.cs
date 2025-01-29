@@ -1,14 +1,20 @@
+
 using Habbit.Resources.Models;
+using Habbit.Services; // Додайте простір імен для TaskService
+using System;
 
 namespace Habbit.Resources.Pages;
 
 public partial class EditTaskPage : ContentPage
 {
-    private TaskItem _task;
-    public EditTaskPage(TaskItem task)
-	{
-		InitializeComponent();
+    private readonly Habbit.Resources.Models.Task _task;
+    private readonly TaskService _taskService;
+
+    public EditTaskPage(Habbit.Resources.Models.Task task, TaskService taskService)
+    {
+        InitializeComponent();
         _task = task;
+        _taskService = taskService;
 
         // Заповнення полів даними задачі
         taskTitleEntry.Text = _task.Title;
@@ -18,35 +24,31 @@ public partial class EditTaskPage : ContentPage
         StrengthButton.BackgroundColor = _task.Attribute == TaskAttribute.Strength ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
         IntelligenceButton.BackgroundColor = _task.Attribute == TaskAttribute.Intelligence ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
         CharismaButton.BackgroundColor = _task.Attribute == TaskAttribute.Charisma ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
+        SliderDifficulty.Value = _task.Score;
     }
-
-    
 
     private void OnHabitButtonClicked(object sender, EventArgs e)
     {
-            HabitButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            HabitButton.TextColor = Colors.White;
+        HabitButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+        HabitButton.TextColor = Colors.White;
 
-            GoalButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            GoalButton.TextColor = Colors.Black;
+        GoalButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        GoalButton.TextColor = Colors.Black;
 
-            _task.Type = TaskType.Habbit;
+        _task.Type = TaskType.Habbit;
     }
 
-    // Goal RadioButton CheckedChanged Handler
     private void OnGoalButtonClicked(object sender, EventArgs e)
     {
-            GoalButton.BackgroundColor = Color.FromArgb("#8EC1F3");
-            GoalButton.TextColor = Colors.White;
+        GoalButton.BackgroundColor = Color.FromArgb("#8EC1F3");
+        GoalButton.TextColor = Colors.White;
 
-            HabitButton.BackgroundColor = Color.FromArgb("#B0B0B0");
-            HabitButton.TextColor = Colors.Black;
+        HabitButton.BackgroundColor = Color.FromArgb("#B0B0B0");
+        HabitButton.TextColor = Colors.Black;
 
-            _task.Type = TaskType.Goal;
+        _task.Type = TaskType.Goal;
     }
 
-
-    // RadioButton CheckedChanged Handlers
     private void OnStrengthButtonClicked(object sender, EventArgs e)
     {
         _task.Attribute = TaskAttribute.Strength;
@@ -86,14 +88,36 @@ public partial class EditTaskPage : ContentPage
         IntelligenceButton.TextColor = Colors.Black;
     }
 
-    private void SaveChanges(object sender, EventArgs e)
+    private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        _task.Score = e.NewValue;
+    }
+
+    private async void SaveChanges(object sender, EventArgs e)
     {
         // Оновлення даних задачі
         _task.Title = taskTitleEntry.Text;
-        
 
+        try
+        {
+            // Виклик API для збереження змін
+            bool isSuccess = await _taskService.UpdateTaskAsync(_task);
 
-        // Повернення до попередньої сторінки
-        Navigation.PopModalAsync();
+            if (isSuccess)
+            {
+                // Успішно оновлено, повертаємось до попередньої сторінки
+                await DisplayAlert("Успіх", "Зміни збережено успішно!", "OK");
+                await Navigation.PopModalAsync();
+            }
+            else
+            {
+                await DisplayAlert("Помилка", "Не вдалося зберегти зміни. Спробуйте ще раз.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Обробка помилок
+            await DisplayAlert("Помилка", $"Виникла помилка: {ex.Message}", "OK");
+        }
     }
 }

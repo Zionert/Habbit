@@ -1,14 +1,20 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Habbit.Resources.Models;
+using Habbit.Services;
+using Habbit.Resources.Pages;
 
 namespace Habbit.Resources.Pages;
 
 public partial class HabbitsPage : ContentPage
 {
-	public HabbitsPage()
+    private readonly TaskService _taskService;
+    private readonly HabitService _habitService;
+    public HabbitsPage(TaskService taskService, HabitService habitService)
 	{
 		InitializeComponent();
-	}
+        _taskService = taskService;
+        _habitService = habitService;
+    }
 
     protected override void OnAppearing()
     {
@@ -21,12 +27,21 @@ public partial class HabbitsPage : ContentPage
     public record ProgressUpdatedMessage3(double ProgressDelta3);
 
 
-    private void UpdateHabitsList()
+    private async void UpdateHabitsList()
     {
         HabitsLayout.Children.Clear();
 
         // Витягуємо задачі типу "Habit"
-        var habits = TaskRepository.Tasks.Where(t => t.Type == TaskType.Habbit);
+        var userId = Preferences.Get("Auth0Id", null);
+        if (string.IsNullOrEmpty(userId))
+        {
+            await DisplayAlert("Error", "User is not logged in.", "OK");
+            return;
+        }
+        var tasks = await _taskService.GetByUserIdAsync(userId);
+
+        // Вибираємо задачі типу "Goal"
+        var habits = tasks.Where(t => t.Type == TaskType.Habbit).ToList();
 
         foreach (var habit in habits)
         {
@@ -47,6 +62,8 @@ public partial class HabbitsPage : ContentPage
                     }
                 }
             };
+            bool isReadyForUpdate = habit.CompletionDate == null ||
+                                (DateTime.UtcNow - habit.CompletionDate.Value).TotalHours >= 24;
 
             var textColor = Colors.Black; // Колір за замовчуванням
             if (habit.Attribute == TaskAttribute.Strength)
@@ -81,29 +98,17 @@ public partial class HabbitsPage : ContentPage
                 TextColor = Colors.White,
                 CornerRadius = 20,
                 WidthRequest = 50,
-                HeightRequest = 40
-            };
+                HeightRequest = 40,
+                IsEnabled = isReadyForUpdate
+            }; 
 
-            completeButton.Clicked += (s, e) =>
+            completeButton.Clicked += async(s, e) =>
             {
-                habit.IsCompleted = true;
+                await _taskService.MarkTaskAsCompletedAsync(habit.Id);
                 DisplayAlert("Success", $"{habit.Title} completed!", "OK");
                 UpdateHabitsList(); // Оновлюємо список
-
-                if (habit.Attribute == TaskAttribute.Strength)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(habit.Difficulty / 100));
-                }
-
-                if (habit.Attribute == TaskAttribute.Intelligence)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(habit.Difficulty / 100));
-                }
-
-                if (habit.Attribute == TaskAttribute.Charisma)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(habit.Difficulty / 100));
-                }
+                var success = await _habitService.UpdateAttributeProgressAsync(userId, habit.Attribute, habit.Score / 100);
+          
             };
 
             // Кнопка видалення задачі
@@ -119,7 +124,7 @@ public partial class HabbitsPage : ContentPage
 
             deleteButton.Clicked += (s, e) =>
             {
-                TaskRepository.Tasks.Remove(habit);
+                _taskService.DeleteAsync(habit.Id);
                 UpdateHabitsList(); // Оновлюємо список
             };
 
@@ -141,7 +146,8 @@ public partial class HabbitsPage : ContentPage
             {
                 Command = new Command(async () =>
                 {
-                    await Navigation.PushModalAsync(new EditTaskPage(habit));
+                    var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
+                    await Navigation.PushModalAsync(new EditTaskPage(habit, taskService));
                     UpdateHabitsList(); // Оновлюємо список після повернення
                 })
             });

@@ -2,6 +2,7 @@ namespace Habbit.Resources.Pages;
 using System.ComponentModel;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.Messaging;
+using Habbit.Services;
 using static Habbit.Resources.Pages.GoalsPage;
 using static Habbit.Resources.Pages.HabbitsPage;
 
@@ -9,14 +10,14 @@ using static Habbit.Resources.Pages.HabbitsPage;
 [QueryProperty(nameof(Name), "Name")]
 public partial class StaticsPage : ContentPage, INotifyPropertyChanged
 {
+    private readonly HabitService _habitService;
+    private double _currentProgressStrength;
+    private double _currentProgressIntelligence;
+    private double _currentProgressCharisma;
 
-    private double _currentProgressStrengh = 0;
-    private double _currentProgressIntelligence = 0;
-    private double _currentProgressCharisma = 0;
-
-    private int _levelStrengh = 1;
-    private int _levelIntelligence = 1;
-    private int _levelCharisma = 1;
+    private int _levelStrength;
+    private int _levelIntelligence;
+    private int _levelCharisma;
 
     private string avatarUrl;
     public string AvatarUrl
@@ -25,6 +26,7 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
         set
         {
             avatarUrl = value;
+            Console.WriteLine($"AvatarUrl set to: {avatarUrl}");
             OnPropertyChanged(nameof(AvatarUrl));
         }
     }
@@ -39,102 +41,96 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged(nameof(Name));
         }
     }
-    public StaticsPage()
-	{
-		InitializeComponent();
+    public StaticsPage(HabitService habitService)
+    {
+        InitializeComponent();
         BindingContext = this; // Прив'язка контексту
+        _habitService = habitService;
+        Console.WriteLine($"Initializing StaticsPage with AvatarUrl: {AvatarUrl}");
+        Task.Run(async () => await LoadStatsAsync());
+    }
 
-        WeakReferenceMessenger.Default.Register<GoalsPage.ProgressUpdatedMessage1>(this, (r, message) =>
+    private async Task LoadStatsAsync()
+    {
+        try
         {
-            _currentProgressStrengh += message.ProgressDelta1;
-            while (_currentProgressStrengh >= 1.0)
+            var userId = Preferences.Get("Auth0Id", null);
+            if (string.IsNullOrEmpty(userId))
             {
-                _currentProgressStrengh -= 1.0;
-                _levelStrengh++;
+                Console.WriteLine("User ID not found in preferences.");
+                return;
             }
-            progressBarStrengh.Progress = _currentProgressStrengh;
-            UpdateLabels();
-        });
 
-        WeakReferenceMessenger.Default.Register<HabbitsPage.ProgressUpdatedMessage1>(this, (r, message) =>
-        {
-            _currentProgressStrengh += message.ProgressDelta1;
-            while (_currentProgressStrengh >= 1.0)
-            {
-                _currentProgressStrengh -= 1.0;
-                _levelStrengh++;
-            }
-            progressBarStrengh.Progress = _currentProgressStrengh;
-            UpdateLabels();
-        });
+            // Отримуємо прогрес
+            var strengthExp = await _habitService.GetStrengthProgressAsync(userId);
+            var intelligenceExp = await _habitService.GetIntelligenceProgressAsync(userId);
+            var charismaExp = await _habitService.GetCharismaProgressAsync(userId);
 
-        WeakReferenceMessenger.Default.Register<GoalsPage.ProgressUpdatedMessage2>(this, (r, message) =>
-        {
-            _currentProgressIntelligence += message.ProgressDelta2;
-            while (_currentProgressIntelligence >= 1.0)
-            {
-                _currentProgressIntelligence -= 1.0;
-                _levelIntelligence++;
-            }
-            progressBarIntelligence.Progress = _currentProgressIntelligence;
-            UpdateLabels();
-        });
+            Console.WriteLine($"Strength: {strengthExp}, Intelligence: {intelligenceExp}, Charisma: {charismaExp}");
 
-        WeakReferenceMessenger.Default.Register<HabbitsPage.ProgressUpdatedMessage2>(this, (r, message) =>
-        {
-            _currentProgressIntelligence += message.ProgressDelta2;
-            while (_currentProgressIntelligence >= 1.0)
-            {
-                _currentProgressIntelligence -= 1.0;
-                _levelIntelligence++;
-            }
-            progressBarIntelligence.Progress = _currentProgressIntelligence;
-            UpdateLabels();
-        });
+            // Оновлюємо прогрес і рівні
+            _currentProgressStrength = CalculateExp(strengthExp ?? 0);
+            _currentProgressIntelligence = CalculateExp(intelligenceExp ?? 0);
+            _currentProgressCharisma = CalculateExp(charismaExp ?? 0);
 
-        WeakReferenceMessenger.Default.Register<GoalsPage.ProgressUpdatedMessage3>(this, (r, message) =>
-        {
-            _currentProgressCharisma += message.ProgressDelta3;
-            while (_currentProgressCharisma >= 1.0)
-            {
-                _currentProgressCharisma -= 1.0;
-                _levelCharisma++;
-            }
-            progressBarCharisma.Progress = _currentProgressCharisma;
-            UpdateLabels();
-        });
+            _levelStrength = CalculateLevel(strengthExp ?? 0);
+            _levelIntelligence = CalculateLevel(intelligenceExp ?? 0);
+            _levelCharisma = CalculateLevel(charismaExp ?? 0);
 
-        WeakReferenceMessenger.Default.Register<HabbitsPage.ProgressUpdatedMessage3>(this, (r, message) =>
-        {
-            _currentProgressCharisma += message.ProgressDelta3;
-            while (_currentProgressCharisma >= 1.0)
+            // Оновлення UI
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                _currentProgressCharisma -= 1.0;
-                _levelCharisma++;
-            }
-            progressBarCharisma.Progress = _currentProgressCharisma;
-            UpdateLabels();
-        });
+                UpdateLabels();
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading stats: {ex.Message}");
+        }
+    }
+
+
+    private double CalculateExp(double exp)
+    {
+        int level = 0;
+        while (exp >= 1.0)
+        {
+            exp -= 1.0;
+            level++;
+        }
+        return exp;
+    }
+
+    private int CalculateLevel(double exp)
+    {
+        int level = 0;
+        while (exp >= 1.0)
+        {
+            exp -= 1.0;
+            level++;
+        }
+        return level;
     }
 
     private void UpdateLabels()
     {
-        labelStrengh.Text = $"LVL{_levelStrengh}";
+        labelStrengh.Text = $"LVL{_levelStrength}";
+        progressBarStrengh.Progress = _currentProgressStrength;
         labelIntelligence.Text = $"LVL{_levelIntelligence}";
+        progressBarIntelligence.Progress = _currentProgressIntelligence;
         labelCharisma.Text = $"LVL{_levelCharisma}";
-        labelMain.Text = $"lvl {Math.Round((_levelStrengh + _levelIntelligence + _levelCharisma) / 3.0)}";
+        progressBarCharisma.Progress = _currentProgressCharisma;
+        labelMain.Text = $"lvl {Math.Round((_levelStrength + _levelIntelligence + _levelCharisma) / 3.0)}";
     }
-
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Task.Run(async () => await LoadStatsAsync());
+    }
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
 
         // Автоматично очищається в WeakReferenceMessenger, ручне відписування не потрібне
     }
-
-
-
-
-
-
 }

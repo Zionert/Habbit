@@ -1,14 +1,19 @@
 ﻿using Habbit.Resources.Models;
 using CommunityToolkit.Mvvm.Messaging;
+using Habbit.Services;
 
 namespace Habbit.Resources.Pages;
 
 public partial class GoalsPage : ContentPage
 {
-	public GoalsPage()
+    private readonly TaskService _taskService;
+    private readonly HabitService _habitService;
+    public GoalsPage(TaskService taskService, HabitService habitService)
 	{
 		InitializeComponent();
-	}
+        _taskService = taskService;
+        _habitService = habitService;
+    }
 
     protected override void OnAppearing()
     {
@@ -21,12 +26,20 @@ public partial class GoalsPage : ContentPage
     public record ProgressUpdatedMessage3(double ProgressDelta3);
 
 
-    private void UpdateGoalsList()
+    private async void UpdateGoalsList()
     {
         GoalsLayout.Children.Clear();
 
+        var userId = Preferences.Get("Auth0Id", null);
+        if (string.IsNullOrEmpty(userId))
+        {
+            await DisplayAlert("Error", "User is not logged in.", "OK");
+            return;
+        }
+        var tasks = await _taskService.GetByUserIdAsync(userId);
+
         // Вибираємо задачі типу "Goal"
-        var goals = TaskRepository.Tasks.Where(t => t.Type == TaskType.Goal);
+        var goals = tasks.Where(t => t.Type == TaskType.Goal).ToList();
 
         foreach (var goal in goals)
         {
@@ -85,26 +98,35 @@ public partial class GoalsPage : ContentPage
                 HeightRequest = 40
             };
 
-            completeButton.Clicked += (s, e) =>
+            completeButton.Clicked += async (s, e) =>
             {
-                goal.IsCompleted = true;
-                DisplayAlert("Success", $"{goal.Title} completed!", "OK");
-                TaskRepository.Tasks.Remove(goal);
+                await DisplayAlert("Success", $"{goal.Title} completed!", "OK");
+                await _taskService.DeleteAsync(goal.Id);
                 UpdateGoalsList(); // Оновлюємо список
+                var success = await _habitService.UpdateAttributeProgressAsync(userId, goal.Attribute, goal.Score / 100);
 
-                if (goal.Attribute == TaskAttribute.Strength)
+                if (success)
                 {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(goal.Difficulty / 100));
+                    // Ви можете оновити локальний стан, якщо потрібно
+                    await DisplayAlert("Success", "Progress updated successfully!", "OK");
+                    if (goal.Attribute == TaskAttribute.Strength)
+                    {
+                        WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(goal.Score / 100));
+                    }
+
+                    if (goal.Attribute == TaskAttribute.Intelligence)
+                    {
+                        WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(goal.Score / 100));
+                    }
+
+                    if (goal.Attribute == TaskAttribute.Charisma)
+                    {
+                        WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(goal.Score / 100));
+                    }
                 }
-
-                if (goal.Attribute == TaskAttribute.Intelligence)
+                else
                 {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(goal.Difficulty / 100));
-                }
-
-                if (goal.Attribute == TaskAttribute.Charisma)
-                {
-                    WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(goal.Difficulty / 100));
+                    await DisplayAlert("Error", "Failed to update progress via API.", "OK");
                 }
             };
 
@@ -121,7 +143,7 @@ public partial class GoalsPage : ContentPage
 
             deleteButton.Clicked += (s, e) =>
             {
-                TaskRepository.Tasks.Remove(goal);
+                _taskService.DeleteAsync(goal.Id);
                 UpdateGoalsList(); // Оновлюємо список
             };
 
@@ -143,7 +165,9 @@ public partial class GoalsPage : ContentPage
             {
                 Command = new Command(async () =>
                 {
-                    await Navigation.PushModalAsync(new EditTaskPage(goal));
+                    // Передаємо об'єкт Task без перетворення
+                    var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
+                    await Navigation.PushModalAsync(new EditTaskPage(goal, taskService));
                     UpdateGoalsList(); // Оновлюємо список після повернення
                 })
             });
