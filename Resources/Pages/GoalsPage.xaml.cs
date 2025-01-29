@@ -166,7 +166,8 @@ public partial class GoalsPage : ContentPage
                 Command = new Command(async () =>
                 {
                     // Передаємо об'єкт Task без перетворення
-                    await Navigation.PushModalAsync(new EditTaskPage(goal));
+                    var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
+                    await Navigation.PushModalAsync(new EditTaskPage(goal, taskService));
                     UpdateGoalsList(); // Оновлюємо список після повернення
                 })
             });

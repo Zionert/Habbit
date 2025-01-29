@@ -18,7 +18,7 @@ namespace Habbit.Services
         // Метод для перевірки існування користувача
         public async Task<bool> CheckUserExistsAsync(string auth0Id)
         {
-            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}");
+            var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}");
             if (response.IsSuccessStatusCode)
             {
                 return true; // Користувач існує
@@ -52,7 +52,7 @@ namespace Habbit.Services
             var json = JsonSerializer.Serialize(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users", content);
+            var response = await _httpClient.PostAsync("https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users", content);
             if (!response.IsSuccessStatusCode)
             {
                 var errorDetails = await response.Content.ReadAsStringAsync();
@@ -81,61 +81,127 @@ namespace Habbit.Services
         // Отримання Strength
         public async Task<double?> GetStrengthProgressAsync(string auth0Id)
         {
-            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/strength");
+            var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/strength");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response JSON: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<dynamic>();
-                return (double?)result?.Strength;
+                using var document = JsonDocument.Parse(responseContent);
+                if (document.RootElement.TryGetProperty("strength", out var strength))
+                {
+                    Console.WriteLine($"Parsed Strength: {strength}");
+                    return strength.GetDouble();
+                }
+                else
+                {
+                    Console.WriteLine("Field 'strength' not found.");
+                    return null;
+                }
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return null; // Користувача або дані немає
+                Console.WriteLine("User not found.");
+                return null;
             }
             else
             {
+                Console.WriteLine($"Unexpected status code: {response.StatusCode}");
                 throw new Exception($"Error fetching Strength progress: {response.StatusCode}");
             }
         }
 
+
         // Отримання Intelligence
         public async Task<double?> GetIntelligenceProgressAsync(string auth0Id)
         {
-            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence");
+            var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response JSON: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<dynamic>();
-                return (double?)result?.Intelligence;
+                try
+                {
+                    using var document = JsonDocument.Parse(responseContent);
+                    if (document.RootElement.TryGetProperty("intelligence", out var intelligence))
+                    {
+                        Console.WriteLine($"Parsed Intelligence: {intelligence}");
+                        return intelligence.GetDouble();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Field 'intelligence' not found.");
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error parsing JSON: {ex.Message}");
+                    return null;
+                }
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return null; // Користувача або дані немає
+                Console.WriteLine("User not found.");
+                return null;
             }
             else
             {
+                Console.WriteLine($"Unexpected status code: {response.StatusCode}");
                 throw new Exception($"Error fetching Intelligence progress: {response.StatusCode}");
             }
         }
 
+
         // Отримання Charisma
         public async Task<double?> GetCharismaProgressAsync(string auth0Id)
         {
-            var response = await _httpClient.GetAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma");
+            var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response JSON: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<dynamic>();
-                return (double?)result?.Charisma;
+                using var document = JsonDocument.Parse(responseContent);
+                if (document.RootElement.TryGetProperty("charisma", out var charisma))
+                {
+                    Console.WriteLine($"Parsed Charisma: {charisma}");
+                    return charisma.GetDouble();
+                }
+                else
+                {
+                    Console.WriteLine("Field 'charisma' not found.");
+                    return null;
+                }
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return null; // Користувача або дані немає
+                Console.WriteLine("User not found.");
+                return null;
             }
             else
             {
+                Console.WriteLine($"Unexpected status code: {response.StatusCode}");
                 throw new Exception($"Error fetching Charisma progress: {response.StatusCode}");
             }
+        }
+
+
+
+        public class StrengthResponse
+        {
+            public double? Strength { get; set; }
+        }
+
+        public class IntelligenceResponse
+        {
+            public double? Intelligence { get; set; }
+        }
+
+        public class CharismaResponse
+        {
+            public double? Charisma { get; set; }
         }
 
         // Оновлення прогресу Strength
@@ -150,7 +216,7 @@ namespace Habbit.Services
             var json = JsonSerializer.Serialize(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/update-progress", content);
+            var response = await _httpClient.PostAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/update-progress", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -179,7 +245,7 @@ namespace Habbit.Services
             var json = JsonSerializer.Serialize(userStats);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence", content);
+            var response = await _httpClient.PutAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence", content);
 
             return response.IsSuccessStatusCode;
         }
@@ -198,7 +264,7 @@ namespace Habbit.Services
             var json = JsonSerializer.Serialize(userStats);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"https://habbit-api1-cgafgqa6c3cfdvhj.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma", content);
+            var response = await _httpClient.PutAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma", content);
 
             return response.IsSuccessStatusCode;
         }

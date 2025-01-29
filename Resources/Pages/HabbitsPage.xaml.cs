@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Habbit.Resources.Models;
 using Habbit.Services;
+using Habbit.Resources.Pages;
 
 namespace Habbit.Resources.Pages;
 
@@ -61,6 +62,8 @@ public partial class HabbitsPage : ContentPage
                     }
                 }
             };
+            bool isReadyForUpdate = habit.CompletionDate == null ||
+                                (DateTime.UtcNow - habit.CompletionDate.Value).TotalHours >= 24;
 
             var textColor = Colors.Black; // Колір за замовчуванням
             if (habit.Attribute == TaskAttribute.Strength)
@@ -95,29 +98,17 @@ public partial class HabbitsPage : ContentPage
                 TextColor = Colors.White,
                 CornerRadius = 20,
                 WidthRequest = 50,
-                HeightRequest = 40
-            };
+                HeightRequest = 40,
+                IsEnabled = isReadyForUpdate
+            }; 
 
             completeButton.Clicked += async(s, e) =>
             {
+                await _taskService.MarkTaskAsCompletedAsync(habit.Id);
                 DisplayAlert("Success", $"{habit.Title} completed!", "OK");
                 UpdateHabitsList(); // Оновлюємо список
                 var success = await _habitService.UpdateAttributeProgressAsync(userId, habit.Attribute, habit.Score / 100);
-                if (success)
-                {
-                    switch (habit.Attribute)
-                    {
-                        case TaskAttribute.Strength:
-                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage1(habit.Score / 100));
-                            break;
-                        case TaskAttribute.Intelligence:
-                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage2(habit.Score / 100));
-                            break;
-                        case TaskAttribute.Charisma:
-                            WeakReferenceMessenger.Default.Send(new ProgressUpdatedMessage3(habit.Score / 100));
-                            break;
-                    }
-                }
+          
             };
 
             // Кнопка видалення задачі
@@ -155,7 +146,8 @@ public partial class HabbitsPage : ContentPage
             {
                 Command = new Command(async () =>
                 {
-                    await Navigation.PushModalAsync(new EditTaskPage(habit));
+                    var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
+                    await Navigation.PushModalAsync(new EditTaskPage(habit, taskService));
                     UpdateHabitsList(); // Оновлюємо список після повернення
                 })
             });

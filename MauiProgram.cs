@@ -44,6 +44,7 @@ namespace Habbit
             builder.Services.AddSingleton<GoalsPage>();
             builder.Services.AddSingleton<HabbitsPage>();
             builder.Services.AddSingleton<StaticsPage>();
+            builder.Services.AddSingleton<EditTaskPage>();
             builder.Services.AddSingleton<HabitService>();
             builder.Services.AddSingleton<TaskService>();
 
