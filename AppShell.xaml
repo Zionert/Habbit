@@ -23,7 +23,7 @@
                 <FontImageSource
                      FontFamily="FontAwesomeSolid"
                      Glyph="&#xf272;" />
-                <!-- Unicode для іконки FontAwesome -->
+                
             </Tab.Icon>
             <ShellContent
                      ContentTemplate="{DataTemplate pages:HabbitsPage}"
@@ -35,7 +35,7 @@
                 <FontImageSource
                      FontFamily="FontAwesomeSolid"
                      Glyph="&#xf14a;" />
-                <!-- Unicode для іконки FontAwesome -->
+                
             </Tab.Icon>
             <ShellContent
                 ContentTemplate="{DataTemplate pages:GoalsPage}" 
@@ -47,7 +47,7 @@
                 <FontImageSource
                     FontFamily="FontAwesomeSolid"
                     Glyph="&#xf067;" />
-                <!-- Unicode для іконки FontAwesome -->
+               
             </Tab.Icon>
             <ShellContent
                 ContentTemplate="{DataTemplate pages:AddPage}" 
@@ -59,7 +59,7 @@
                 <FontImageSource
                      FontFamily="FontAwesomeSolid"
                      Glyph="&#xf200;" />
-                <!-- Unicode для іконки FontAwesome -->
+               
             </Tab.Icon>
             <ShellContent
                 ContentTemplate="{DataTemplate pages:StaticsPage}" 
@@ -71,7 +71,7 @@
                 <FontImageSource
                      FontFamily="FontAwesomeSolid"
                      Glyph="&#xf013;" />
-                <!-- Unicode для іконки FontAwesome -->
+               
             </Tab.Icon>
             <ShellContent
                 ContentTemplate="{DataTemplate pages:SettingsPage}" 

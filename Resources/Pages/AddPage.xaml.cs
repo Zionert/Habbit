@@ -14,8 +14,8 @@ public partial class AddPage : ContentPage
         _taskService = taskService;
     }
 
-    private TaskType? selectedType = null;      // Для "Habit" або "Goal"
-    private TaskAttribute? selectedAttribute = null; // Для "Strength", "Intelligence", "Charisma"
+    private TaskType? selectedType = null;     
+    private TaskAttribute? selectedAttribute = null; 
 
 
     private void OnHabitButtonClicked(object sender, EventArgs e)
@@ -31,7 +31,7 @@ public partial class AddPage : ContentPage
 
     }
 
-    // Goal RadioButton CheckedChanged Handler
+
     private void OnGoalButtonClicked(object sender, EventArgs e)
     {
 
@@ -46,7 +46,7 @@ public partial class AddPage : ContentPage
     }
 
 
-    // RadioButton CheckedChanged Handlers
+   
     private void OnStrengthButtonClicked(object sender, EventArgs e)
     {
         selectedAttribute = TaskAttribute.Strength;
@@ -88,13 +88,13 @@ public partial class AddPage : ContentPage
 
     private async void AddTask(object sender, EventArgs e)
     {
-        // Витягуємо дані з полів вводу та радіокнопок
-        var title = taskTitleEntry.Text; // Витягуємо з Entry
-        var type = selectedType;        // Витягуємо вибраний тип ("Habit" або "Goal")
+       
+        var title = taskTitleEntry.Text; 
+        var type = selectedType;        
         var attribute = selectedAttribute;
         var difficulty = SliderDifficulty.Value;
 
-        // Перевірка введених даних
+        
         if (type == null || attribute == null)
         {
             await DisplayAlert("Error", "Task Type and Attribute are required!", "OK");
@@ -112,7 +112,7 @@ public partial class AddPage : ContentPage
             await DisplayAlert("Error", "User is not logged in.", "OK");
             return;
         }
-        // Створюємо нову задачу
+       
         var newTask = new Habbit.Resources.Models.Task
         {
             Title = title,
@@ -124,10 +124,10 @@ public partial class AddPage : ContentPage
             Score = difficulty
         };
 
-        // Додаємо в репозиторій
+        
         var createdTask = await _taskService.CreateAsync(newTask);
 
-        // Сповіщення користувача
+        
         if (createdTask != null)
         {
             await DisplayAlert("Success", "Task added successfully!", "OK");

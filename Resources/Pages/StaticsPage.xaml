@@ -8,18 +8,18 @@
 
         
 
-        <!-- Структура для аватарки та імені -->
+       
         <VerticalStackLayout Padding="20" Spacing="10">
-            <!-- Контейнер для аватарки та імені користувача -->
+           
             <HorizontalStackLayout Spacing="20" VerticalOptions="Start">
-                <!-- Аватарка -->
+                
                 <Frame HeightRequest="60" WidthRequest="60" CornerRadius="60"
                        BorderColor="Gray" Padding="0"
                        VerticalOptions="Center" HorizontalOptions="Center">
                     <Image Source="{Binding AvatarUrl}" Aspect="AspectFill" />
                 </Frame>
 
-                <!-- Інформація про користувача -->
+                
                 <VerticalStackLayout VerticalOptions="CenterAndExpand">
                     <Label Text="{Binding Name}"
                            VerticalOptions="Center"
@@ -33,7 +33,7 @@
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <!-- Прогрес-бари -->
+            
             <VerticalStackLayout Padding="10" Spacing="5" VerticalOptions="Start">
                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                     <HorizontalStackLayout Spacing="247">
@@ -105,7 +105,7 @@
             </VerticalStackLayout>
             
             <VerticalStackLayout>
-                <Label Text="Strength - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+                <Label Text="Strengh - Increases the efficiency of complex tasks and increases the likelihood of achieving high results." 
                HorizontalOptions="Center"
                VerticalOptions="Center"
                FontSize="16"
@@ -113,7 +113,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Intelligence - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+                <Label Text="Intelligence - Accelerates learning and mastery of new skills. Helps to process information faster and develop creative thinking." 
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        FontSize="16"
@@ -121,7 +121,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Charisma - Lorem ipsum dolor sit amet, ius justo tamquam ne. Ne soluta abhorreant nam, has choro disputando ex. Atqui vivendo accusata qui an, ea tollit." 
+                <Label Text="Charisma - Improves communication skills and the ability to interact effectively with others. Helps reduce stress in social situations." 
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        FontSize="16"

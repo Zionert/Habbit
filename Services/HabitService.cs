@@ -15,17 +15,17 @@ namespace Habbit.Services
             _httpClient = httpClientFactory.CreateClient();
         }
 
-        // Метод для перевірки існування користувача
+        
         public async Task<bool> CheckUserExistsAsync(string auth0Id)
         {
             var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}");
             if (response.IsSuccessStatusCode)
             {
-                return true; // Користувач існує
+                return true; 
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return false; // Користувача немає
+                return false;
             }
             else
             {
@@ -33,7 +33,7 @@ namespace Habbit.Services
             }
         }
 
-        // Метод для створення нового користувача через API
+        
         public async Task<bool> CreateUserAsync(string auth0Id, string username, string name, string email, string avatarUrl, string theme)
         {
             var user = new
@@ -62,7 +62,7 @@ namespace Habbit.Services
             return response.IsSuccessStatusCode;
         }
 
-        // Головний метод для логування/створення користувача
+        
         public async Task<bool> EnsureUserExistsAsync(string auth0Id, string username, string name, string email, string avatarUrl, string theme)
         {
             var userExists = await CheckUserExistsAsync(auth0Id);
@@ -74,11 +74,11 @@ namespace Habbit.Services
             }
 
             Console.WriteLine("User already exists.");
-            return true; // Користувач існує, тому не потрібно нічого створювати
+            return true; 
         }
 
-        // Отримання Strength
-        // Отримання Strength
+       
+       
         public async Task<double?> GetStrengthProgressAsync(string auth0Id)
         {
             var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/strength");
@@ -112,7 +112,7 @@ namespace Habbit.Services
         }
 
 
-        // Отримання Intelligence
+       
         public async Task<double?> GetIntelligenceProgressAsync(string auth0Id)
         {
             var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/intelligence");
@@ -154,7 +154,6 @@ namespace Habbit.Services
         }
 
 
-        // Отримання Charisma
         public async Task<double?> GetCharismaProgressAsync(string auth0Id)
         {
             var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/users/{auth0Id}/charisma");
@@ -204,7 +203,7 @@ namespace Habbit.Services
             public double? Charisma { get; set; }
         }
 
-        // Оновлення прогресу Strength
+       
         public async Task<bool> UpdateAttributeProgressAsync(string auth0Id, TaskAttribute attribute, double increment)
         {
             var payload = new UpdateProgressRequest
@@ -220,7 +219,7 @@ namespace Habbit.Services
 
             if (response.IsSuccessStatusCode)
             {
-                return true; // Успішне оновлення
+                return true; 
             }
             else
             {
@@ -231,7 +230,7 @@ namespace Habbit.Services
         }
 
 
-        // Оновлення прогресу Intelligence
+        
         public async Task<bool> UpdateIntelligenceProgressAsync(string auth0Id, double intelligenceProgress)
         {
             var userStats = new
@@ -250,7 +249,7 @@ namespace Habbit.Services
             return response.IsSuccessStatusCode;
         }
 
-        // Оновлення прогресу Charisma
+       
         public async Task<bool> UpdateCharismaProgressAsync(string auth0Id, double charismaProgress)
         {
             var userStats = new

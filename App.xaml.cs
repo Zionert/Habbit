@@ -22,10 +22,10 @@ namespace Habbit
 
         private async void RedirectIfLoggedOut()
         {
-            // Check login state
+            
             if (!Preferences.Get("IsLoggedIn", false))
             {
-                // Ensure we are on the MainPage
+                
                 await Shell.Current.GoToAsync("//MainPage");
             }
         }

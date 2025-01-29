@@ -27,7 +27,7 @@ namespace Habbit
         {
             try
             {
-                // Show loading page
+                
                 await Shell.Current.GoToAsync("//LoadingPage");
 
                 var loginResult = await auth0Client.LoginAsync();
@@ -35,7 +35,7 @@ namespace Habbit
                 {
                     Preferences.Set("IsLoggedIn", true);
 
-                    // Отримуємо дані користувача
+                    
                     var user = loginResult.User;
                     var auth0Id = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value ?? throw new Exception("Auth0Id is missing.");
                     Preferences.Set("Auth0Id", auth0Id);
@@ -46,7 +46,7 @@ namespace Habbit
                     var isSuccess = await habitService.EnsureUserExistsAsync(auth0Id, username, name, email, avatarUrl, "light");
                     if (isSuccess)
                     {
-                        // Якщо все добре, переходимо на наступну сторінку
+                        
                         var route = $"//StaticsPage?AvatarUrl={Uri.EscapeDataString(avatarUrl)}&Name={Uri.EscapeDataString(name)}";
                         await Shell.Current.GoToAsync(route);
                     }
@@ -59,7 +59,7 @@ namespace Habbit
                 {
                     await DisplayAlert("Error", loginResult.ErrorDescription, "OK");
 
-                    // Navigate back to MainPage if login fails
+                    
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }
@@ -67,7 +67,7 @@ namespace Habbit
             {
                 await DisplayAlert("Error", $"An unexpected error occurred: {ex.Message}", "OK");
 
-                // Navigate back to MainPage if an error occurs
+                
                 await Shell.Current.GoToAsync("//MainPage");
             }
         }

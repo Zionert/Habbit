@@ -10,7 +10,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <!-- Login View -->
+            
             <StackLayout x:Name="LoginView" Grid.Row="0">
                 <StackLayout BackgroundColor="#E7E7E7">
                     <Grid RowDefinitions="125, Auto, Auto, Auto"
@@ -39,7 +39,7 @@
                                    VerticalOptions="Center">
                                 <Grid>
                                     <HorizontalStackLayout Margin="40, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="Start">
-                                        <!-- Іконка -->
+                                       
                                         <Image>
                                             <Image.Source>
                                                 <FontImageSource Glyph="&#xf007;"
@@ -52,13 +52,13 @@
                                     </HorizontalStackLayout>
 
                                     <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                    <!-- Текст -->
+                                   
                                         <Label Text="Welcome!"
                                                FontSize="28"
                                                TextColor="White" />
                                     </HorizontalStackLayout>
 
-                                    <!-- Клікабельність -->
+                                   
                                     <Button BackgroundColor="Transparent"
                                             Clicked="OnLoginClicked" />
                                 </Grid>

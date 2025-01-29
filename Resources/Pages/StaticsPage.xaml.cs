@@ -44,7 +44,7 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
     public StaticsPage(HabitService habitService)
     {
         InitializeComponent();
-        BindingContext = this; // Прив'язка контексту
+        BindingContext = this; 
         _habitService = habitService;
         Console.WriteLine($"Initializing StaticsPage with AvatarUrl: {AvatarUrl}");
         Task.Run(async () => await LoadStatsAsync());
@@ -61,14 +61,14 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
                 return;
             }
 
-            // Отримуємо прогрес
+           
             var strengthExp = await _habitService.GetStrengthProgressAsync(userId);
             var intelligenceExp = await _habitService.GetIntelligenceProgressAsync(userId);
             var charismaExp = await _habitService.GetCharismaProgressAsync(userId);
 
             Console.WriteLine($"Strength: {strengthExp}, Intelligence: {intelligenceExp}, Charisma: {charismaExp}");
 
-            // Оновлюємо прогрес і рівні
+            
             _currentProgressStrength = CalculateExp(strengthExp ?? 0);
             _currentProgressIntelligence = CalculateExp(intelligenceExp ?? 0);
             _currentProgressCharisma = CalculateExp(charismaExp ?? 0);
@@ -77,7 +77,7 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
             _levelIntelligence = CalculateLevel(intelligenceExp ?? 0);
             _levelCharisma = CalculateLevel(charismaExp ?? 0);
 
-            // Оновлення UI
+            
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 UpdateLabels();
@@ -131,6 +131,6 @@ public partial class StaticsPage : ContentPage, INotifyPropertyChanged
     {
         base.OnDisappearing();
 
-        // Автоматично очищається в WeakReferenceMessenger, ручне відписування не потрібне
+        
     }
 }

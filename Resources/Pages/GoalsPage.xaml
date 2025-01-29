@@ -8,7 +8,7 @@
     <ScrollView>
 
                 <VerticalStackLayout x:Name="GoalsLayout" Padding="20" Spacing="10">
-            <!-- Тут з'являтимуться цілі -->
+           
         </VerticalStackLayout>
     </ScrollView>
 

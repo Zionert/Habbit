@@ -38,12 +38,12 @@ public partial class GoalsPage : ContentPage
         }
         var tasks = await _taskService.GetByUserIdAsync(userId);
 
-        // Вибираємо задачі типу "Goal"
+        
         var goals = tasks.Where(t => t.Type == TaskType.Goal).ToList();
 
         foreach (var goal in goals)
         {
-            // Головна рамка для кожної цілі
+           
             var taskFrame = new Frame
             {
                 BackgroundColor = Colors.White,
@@ -55,29 +55,29 @@ public partial class GoalsPage : ContentPage
                 {
                     ColumnDefinitions =
                     {
-                         new ColumnDefinition { Width = GridLength.Star }, // Назва цілі
-                         new ColumnDefinition { Width = GridLength.Auto }  // Кнопки
+                         new ColumnDefinition { Width = GridLength.Star }, 
+                         new ColumnDefinition { Width = GridLength.Auto }  
                     }
                 }
             };
 
-            var textColor = Colors.Black; // Колір за замовчуванням
+            var textColor = Colors.Black; 
             if (goal.Attribute == TaskAttribute.Strength)
             {
-                textColor = Color.FromArgb("#FF6347"); // Червоний для Strength
+                textColor = Color.FromArgb("#FF6347"); 
             }
             else if (goal.Attribute == TaskAttribute.Intelligence)
             {
-                textColor = Color.FromArgb("#8EC1F3"); // Блакитний для Intelligence
+                textColor = Color.FromArgb("#8EC1F3"); 
             }
             else if (goal.Attribute == TaskAttribute.Charisma)
             {
-                textColor = Color.FromArgb("#FFD700"); // Золотий для Charisma
+                textColor = Color.FromArgb("#FFD700"); 
             }
 
 
 
-            // Назва цілі
+            
             var label = new Label
             {
                 Text = goal.Title,
@@ -87,7 +87,7 @@ public partial class GoalsPage : ContentPage
                 FontSize = 16
             };
 
-            // Кнопка завершення цілі
+         
             var completeButton = new Button
             {
                 Text = "Yes",
@@ -102,12 +102,12 @@ public partial class GoalsPage : ContentPage
             {
                 await DisplayAlert("Success", $"{goal.Title} completed!", "OK");
                 await _taskService.DeleteAsync(goal.Id);
-                UpdateGoalsList(); // Оновлюємо список
+                UpdateGoalsList(); 
                 var success = await _habitService.UpdateAttributeProgressAsync(userId, goal.Attribute, goal.Score / 100);
 
                 if (success)
                 {
-                    // Ви можете оновити локальний стан, якщо потрібно
+                    
                     await DisplayAlert("Success", "Progress updated successfully!", "OK");
                     if (goal.Attribute == TaskAttribute.Strength)
                     {
@@ -130,7 +130,7 @@ public partial class GoalsPage : ContentPage
                 }
             };
 
-            // Кнопка видалення цілі
+            
             var deleteButton = new Button
             {
                 Text = "No",
@@ -144,10 +144,10 @@ public partial class GoalsPage : ContentPage
             deleteButton.Clicked += (s, e) =>
             {
                 _taskService.DeleteAsync(goal.Id);
-                UpdateGoalsList(); // Оновлюємо список
+                UpdateGoalsList(); 
             };
 
-            // Горизонтальний стек для кнопок
+            
             var buttonsStack = new HorizontalStackLayout
             {
                 Spacing = 5,
@@ -156,23 +156,23 @@ public partial class GoalsPage : ContentPage
                 VerticalOptions = LayoutOptions.Center
             };
 
-            // Додавання елементів до сітки
+            
             var grid = (Grid)taskFrame.Content;
-            grid.Add(label, 0, 0);         // Назва цілі в перший стовпець
-            grid.Add(buttonsStack, 1, 0); // Кнопки в другий стовпець
+            grid.Add(label, 0, 0);        
+            grid.Add(buttonsStack, 1, 0); 
 
             taskFrame.GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(async () =>
                 {
-                    // Передаємо об'єкт Task без перетворення
+                    
                     var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
                     await Navigation.PushModalAsync(new EditTaskPage(goal, taskService));
-                    UpdateGoalsList(); // Оновлюємо список після повернення
+                    UpdateGoalsList(); 
                 })
             });
 
-            // Додавання рамки до контейнера
+            
             GoalsLayout.Children.Add(taskFrame);
         }
     }

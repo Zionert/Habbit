@@ -8,7 +8,7 @@
                 
         <VerticalStackLayout Padding="20" Spacing="20">
 
-            <!-- Task Title Input -->
+           
             <Frame BackgroundColor="#1F1F1F" CornerRadius="8" Padding="10">
                 <VerticalStackLayout>
                     <Label Text="Task Title" TextColor="White" FontSize="14" />
@@ -21,7 +21,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Description Input -->
+            
             <Frame BackgroundColor="#1F1F1F" CornerRadius="8" Padding="10">
                 <VerticalStackLayout>
                     <Label Text="Description (optional)" TextColor="White" FontSize="14" />
@@ -33,7 +33,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Selectable Habit and Goal Buttons -->
+           
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
                 <Button x:Name="HabitButton"
                     Text="Habit"
@@ -52,7 +52,7 @@
                     Clicked="OnGoalButtonClicked" />
             </HorizontalStackLayout>
 
-            <!-- Strength, Intelligence, Charisma Buttons -->
+            
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                 <Button x:Name="StrengthButton"
                     Text="Strength"

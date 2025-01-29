@@ -1,6 +1,6 @@
 
 using Habbit.Resources.Models;
-using Habbit.Services; // Додайте простір імен для TaskService
+using Habbit.Services; 
 using System;
 
 namespace Habbit.Resources.Pages;
@@ -16,7 +16,7 @@ public partial class EditTaskPage : ContentPage
         _task = task;
         _taskService = taskService;
 
-        // Заповнення полів даними задачі
+        
         taskTitleEntry.Text = _task.Title;
         HabitButton.BackgroundColor = _task.Type == TaskType.Habbit ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
         GoalButton.BackgroundColor = _task.Type == TaskType.Goal ? Color.FromArgb("#8EC1F3") : Color.FromArgb("#B0B0B0");
@@ -95,29 +95,29 @@ public partial class EditTaskPage : ContentPage
 
     private async void SaveChanges(object sender, EventArgs e)
     {
-        // Оновлення даних задачі
+        
         _task.Title = taskTitleEntry.Text;
 
         try
         {
-            // Виклик API для збереження змін
+            
             bool isSuccess = await _taskService.UpdateTaskAsync(_task);
 
             if (isSuccess)
             {
-                // Успішно оновлено, повертаємось до попередньої сторінки
-                await DisplayAlert("Успіх", "Зміни збережено успішно!", "OK");
+                
+                await DisplayAlert("Success", "Changes saved successfully!", "OK");
                 await Navigation.PopModalAsync();
             }
             else
             {
-                await DisplayAlert("Помилка", "Не вдалося зберегти зміни. Спробуйте ще раз.", "OK");
+                await DisplayAlert("Error", "Could not save changes. Please try again.", "OK");
             }
         }
         catch (Exception ex)
         {
-            // Обробка помилок
-            await DisplayAlert("Помилка", $"Виникла помилка: {ex.Message}", "OK");
+            
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
     }
 }

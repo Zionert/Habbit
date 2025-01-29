@@ -22,10 +22,10 @@ public partial class SettingsPage : ContentPage
         {
             await _auth0Client.LogoutAsync();
 
-            // Clear login state
+            
             Preferences.Remove("IsLoggedIn");
 
-            // Navigate to MainPage
+            
             await Shell.Current.GoToAsync("//MainPage");
         }
         catch (Exception ex)

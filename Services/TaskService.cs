@@ -23,37 +23,37 @@ public class TaskService
         _tasks = database.GetCollection<Habbit.Resources.Models.Task>("tasks");
     }
 
-    // Метод для створення нового завдання
+   
     public async Task<bool> CreateAsync(Habbit.Resources.Models.Task task)
     {
         try
         {
             task.Id = string.Empty;
-            // Перетворюємо завдання в JSON
+           
             var json = JsonSerializer.Serialize(task);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            // Викликаємо ваш API
+            
             var response = await _httpClient.PostAsync("https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/tasks", content);
 
-            // Перевіряємо, чи вдалося створити завдання через API
+            
             if (!response.IsSuccessStatusCode)
             {
                 var errorDetails = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"Error creating task: {errorDetails}");
-                return false; // Якщо помилка, повертаємо false
+                return false; 
             }
 
-            return true; // Якщо успішно, повертаємо true
+            return true; 
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Exception creating task: {ex.Message}");
-            return false; // Якщо виникла помилка, повертаємо false
+            return false; 
         }
     }
 
-    // Метод для отримання завдання за ID
+   
     public async Task<Habbit.Resources.Models.Task> GetByIdAsync(string id)
     {
         var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/tasks/{id}");
@@ -68,7 +68,7 @@ public class TaskService
         }
     }
 
-    // Метод для отримання всіх завдань користувача
+    
     public async Task<List<Habbit.Resources.Models.Task>> GetByUserIdAsync(string userId)
     {
         var response = await _httpClient.GetAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/tasks/user/{userId}");
@@ -83,7 +83,7 @@ public class TaskService
         }
     }
 
-    // Метод для оновлення завдання
+    
     public async Task<bool> UpdateAsync(string id, Habbit.Resources.Models.Task updatedTask)
     {
         var json = JsonSerializer.Serialize(updatedTask);
@@ -106,7 +106,7 @@ public class TaskService
         return response.IsSuccessStatusCode;
     }
 
-    // Метод для видалення завдання
+    
     public async Task<bool> DeleteAsync(string id)
     {
         var response = await _httpClient.DeleteAsync($"https://habbit-api-dbesdvgkhefgdwdh.polandcentral-01.azurewebsites.net/api/tasks/{id}");
@@ -120,13 +120,13 @@ public class TaskService
         return response.IsSuccessStatusCode;
     }
 
-    // Метод для позначення завдання як виконаного
+    
     public async Task<bool> MarkAsCompletedAsync(string id)
     {
         var task = await _tasks.Find(t => t.Id == id).FirstOrDefaultAsync();
         if (task == null) return false;
 
-        task.CompletionDate = DateTime.UtcNow; // Встановлюємо поточну дату як дату завершення
+        task.CompletionDate = DateTime.UtcNow; 
         var result = await _tasks.ReplaceOneAsync(t => t.Id == id, task);
         return result.IsAcknowledged && result.ModifiedCount > 0;
     }

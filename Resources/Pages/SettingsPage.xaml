@@ -10,10 +10,10 @@
 
     <ScrollView>
 
-        
 
 
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Button Text="Log Out"
             BackgroundColor="#F03716"
             TextColor="White"
@@ -22,8 +22,8 @@
             CornerRadius="26"
             FontSize="Large"
             Padding="10"
-            Clicked="LogOut" />
-        </StackLayout>
+            Clicked="LogOut"/>
+        </Grid>
 
 
     </ScrollView>

@@ -31,7 +31,7 @@ public partial class HabbitsPage : ContentPage
     {
         HabitsLayout.Children.Clear();
 
-        // Витягуємо задачі типу "Habit"
+        
         var userId = Preferences.Get("Auth0Id", null);
         if (string.IsNullOrEmpty(userId))
         {
@@ -40,12 +40,12 @@ public partial class HabbitsPage : ContentPage
         }
         var tasks = await _taskService.GetByUserIdAsync(userId);
 
-        // Вибираємо задачі типу "Goal"
+        
         var habits = tasks.Where(t => t.Type == TaskType.Habbit).ToList();
 
         foreach (var habit in habits)
         {
-            // Головна рамка для задачі
+            
             var taskFrame = new Frame
             {
                 BackgroundColor = Colors.White,
@@ -57,30 +57,30 @@ public partial class HabbitsPage : ContentPage
                 {
                     ColumnDefinitions =
                     {
-                         new ColumnDefinition { Width = GridLength.Star }, // Назва задачі
-                         new ColumnDefinition { Width = GridLength.Auto }  // Кнопки
+                         new ColumnDefinition { Width = GridLength.Star }, 
+                         new ColumnDefinition { Width = GridLength.Auto }  
                     }
                 }
             };
             bool isReadyForUpdate = habit.CompletionDate == null ||
                                 (DateTime.UtcNow - habit.CompletionDate.Value).TotalHours >= 24;
 
-            var textColor = Colors.Black; // Колір за замовчуванням
+            var textColor = Colors.Black; 
             if (habit.Attribute == TaskAttribute.Strength)
             {
-                textColor = Color.FromArgb("#FF6347"); // Червоний колір для Strength
+                textColor = Color.FromArgb("#FF6347"); 
             }
             else if (habit.Attribute == TaskAttribute.Intelligence)
             {
-                textColor = Color.FromArgb("#8EC1F3"); // Блакитний колір для Intelligence
+                textColor = Color.FromArgb("#8EC1F3"); 
             }
             else if (habit.Attribute == TaskAttribute.Charisma)
             {
-                textColor = Color.FromArgb("#FFD700"); // Золотий колір для Charisma
+                textColor = Color.FromArgb("#FFD700"); 
             }
 
 
-            // Назва задачі
+          
             var label = new Label
             {
                 Text = habit.Title,
@@ -90,7 +90,7 @@ public partial class HabbitsPage : ContentPage
                 FontSize = 16
             };
 
-            // Кнопка завершення задачі
+         
             var completeButton = new Button
             {
                 Text = "Yes",
@@ -106,12 +106,12 @@ public partial class HabbitsPage : ContentPage
             {
                 await _taskService.MarkTaskAsCompletedAsync(habit.Id);
                 DisplayAlert("Success", $"{habit.Title} completed!", "OK");
-                UpdateHabitsList(); // Оновлюємо список
+                UpdateHabitsList(); 
                 var success = await _habitService.UpdateAttributeProgressAsync(userId, habit.Attribute, habit.Score / 100);
           
             };
 
-            // Кнопка видалення задачі
+           
             var deleteButton = new Button
             {
                 Text = "No",
@@ -125,10 +125,10 @@ public partial class HabbitsPage : ContentPage
             deleteButton.Clicked += (s, e) =>
             {
                 _taskService.DeleteAsync(habit.Id);
-                UpdateHabitsList(); // Оновлюємо список
+                UpdateHabitsList(); 
             };
 
-            // Горизонтальний стек для кнопок
+           
             var buttonsStack = new HorizontalStackLayout
             {
                 Spacing = 5,
@@ -137,10 +137,10 @@ public partial class HabbitsPage : ContentPage
                 VerticalOptions = LayoutOptions.Center
             };  
 
-            // Додавання елементів до сітки
+          
             var grid = (Grid)taskFrame.Content;
-            grid.Add(label, 0, 0);         // Назва задачі в перший стовпець
-            grid.Add(buttonsStack, 1, 0); // Кнопки в другий стовпець
+            grid.Add(label, 0, 0);       
+            grid.Add(buttonsStack, 1, 0); 
 
             taskFrame.GestureRecognizers.Add(new TapGestureRecognizer
             {
@@ -148,12 +148,12 @@ public partial class HabbitsPage : ContentPage
                 {
                     var taskService = App.Current.Handler.MauiContext.Services.GetService<TaskService>();
                     await Navigation.PushModalAsync(new EditTaskPage(habit, taskService));
-                    UpdateHabitsList(); // Оновлюємо список після повернення
+                    UpdateHabitsList(); 
                 })
             });
 
 
-            // Додавання рамки до контейнера
+           
             HabitsLayout.Children.Add(taskFrame);
         }
     }
